@@ -45,11 +45,14 @@ const renderPhoto = (asset: PhotoAsset, className = ''): string => {
 const photoGroupClasses = (hasSecondaryPhoto: boolean): string =>
   `scene__media photo-group photo-group--${hasSecondaryPhoto ? 'multiple' : 'single'}`
 
-const renderDocketMatter = (matter: DocketMatter): string => `
-  <li class="docket__item">
-    <div>
-      <h3>${matter.title}</h3>
-      ${matter.detail ? `<p>${matter.detail}</p>` : ''}
+const renderDocketMatter = (matter: DocketMatter, index: number): string => `
+  <li class="docket__item" style="--item-index: ${index};">
+    <div class="docket__meta">
+      <span class="docket__index">0${index + 1}</span>
+      <div class="docket__content">
+        <h3>${matter.title}</h3>
+        ${matter.detail ? `<p>${matter.detail}</p>` : ''}
+      </div>
     </div>
     <p class="status">${matter.status}</p>
   </li>
@@ -230,7 +233,7 @@ export const renderSite = (): string => {
             <h2 id="pending-title" tabindex="-1" data-scene-heading>${pending.label}</h2>
           </div>
           <ol class="docket">
-            ${pending.matters.map(renderDocketMatter).join('')}
+            ${pending.matters.map((matter, index) => renderDocketMatter(matter, index)).join('')}
           </ol>
           <div class="scene__actions">
             <button class="button" type="button" aria-controls="final-judgment" data-scene-next>
@@ -249,7 +252,11 @@ export const renderSite = (): string => {
         data-scene-state="inactive"
         hidden
       >
-        <div class="scene__inner">
+        <div class="scene__inner judgment__inner">
+          <div class="judgment__stamp" aria-hidden="true">
+            <span class="stamp__label">HỘI ĐỒNG PHÊ CHUẨN</span>
+            <span class="stamp__meta">TUỔI 22 • CHÍNH THỨC</span>
+          </div>
           <p class="eyebrow">${judgment.label}</p>
           <h2 id="judgment-title" tabindex="-1" data-scene-heading>${judgment.label}</h2>
           <p class="statement">${judgment.copy}</p>

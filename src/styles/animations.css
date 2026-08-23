@@ -1,0 +1,63 @@
+.scene[data-scene-state="active"] {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.scene[data-scene-state="entering"] {
+  opacity: 0;
+  transform: translateX(0.75rem);
+}
+
+.scene[data-scene-state="leaving"] {
+  opacity: 0;
+  transform: translateX(-0.75rem);
+}
+
+.scene[data-scene] {
+  transition:
+    opacity 160ms ease,
+    transform 160ms ease;
+}
+
+.confetti__piece {
+  position: absolute;
+  width: 0.45rem;
+  height: 0.75rem;
+  background: var(--royal-blue);
+  animation: confetti-burst 1.4s ease-out var(--confetti-delay) both;
+}
+
+.confetti__piece:nth-child(3n + 2) {
+  background: var(--bright-blue);
+}
+
+.confetti__piece:nth-child(3n + 3) {
+  background: var(--baby-blue);
+}
+
+@keyframes confetti-burst {
+  0% {
+    opacity: 1;
+    transform: translate(0, 0) rotate(0deg);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate(var(--confetti-x), 11rem) rotate(var(--confetti-rotate));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+}

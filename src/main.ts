@@ -1,60 +1,51 @@
-import './style.css'
-import typescriptLogo from './assets/typescript.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
-import { setupCounter } from './counter.ts'
+import './styles/main.css'
+import './styles/animations.css'
+import './styles/responsive.css'
+import { audioAsset } from './content.ts'
+import { renderSite } from './render.ts'
+import { setupAudio } from './scripts/audio.ts'
+import { setupConfetti } from './scripts/confetti.ts'
+import { setupSceneController } from './scripts/scene-controller.ts'
 
-document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
-<section id="center">
-  <div class="hero">
-    <img src="${heroImg}" class="base" width="170" height="179">
-    <img src="${typescriptLogo}" class="framework" alt="TypeScript logo"/>
-    <img src="${viteLogo}" class="vite" alt="Vite logo" />
-  </div>
-  <div>
-    <h1>Get started</h1>
-    <p>Edit <code>src/main.ts</code> and save to test <code>HMR</code></p>
-  </div>
-  <button id="counter" type="button" class="counter"></button>
-</section>
+const getRequiredElement = <ElementType extends Element>(
+  selector: string,
+): ElementType => {
+  const element = document.querySelector<ElementType>(selector)
 
-<div class="ticks"></div>
+  if (!element) {
+    throw new Error(`Required interface element is missing: ${selector}`)
+  }
 
-<section id="next-steps">
-  <div id="docs">
-    <svg class="icon" role="presentation" aria-hidden="true"><use href="/icons.svg#documentation-icon"></use></svg>
-    <h2>Documentation</h2>
-    <p>Your questions, answered</p>
-    <ul>
-      <li>
-        <a href="https://vite.dev/" target="_blank">
-          <img class="logo" src="${viteLogo}" alt="" />
-          Explore Vite
-        </a>
-      </li>
-      <li>
-        <a href="https://www.typescriptlang.org" target="_blank">
-          <img class="button-icon" src="${typescriptLogo}" alt="">
-          Learn more
-        </a>
-      </li>
-    </ul>
-  </div>
-  <div id="social">
-    <svg class="icon" role="presentation" aria-hidden="true"><use href="/icons.svg#social-icon"></use></svg>
-    <h2>Connect with us</h2>
-    <p>Join the Vite community</p>
-    <ul>
-      <li><a href="https://github.com/vitejs/vite" target="_blank"><svg class="button-icon" role="presentation" aria-hidden="true"><use href="/icons.svg#github-icon"></use></svg>GitHub</a></li>
-      <li><a href="https://chat.vite.dev/" target="_blank"><svg class="button-icon" role="presentation" aria-hidden="true"><use href="/icons.svg#discord-icon"></use></svg>Discord</a></li>
-      <li><a href="https://x.com/vite_js" target="_blank"><svg class="button-icon" role="presentation" aria-hidden="true"><use href="/icons.svg#x-icon"></use></svg>X.com</a></li>
-      <li><a href="https://bsky.app/profile/vite.dev" target="_blank"><svg class="button-icon" role="presentation" aria-hidden="true"><use href="/icons.svg#bluesky-icon"></use></svg>Bluesky</a></li>
-    </ul>
-  </div>
-</section>
+  return element
+}
 
-<div class="ticks"></div>
-<section id="spacer"></section>
-`
+const app = getRequiredElement<HTMLDivElement>('#app')
+app.innerHTML = renderSite()
 
-setupCounter(document.querySelector<HTMLButtonElement>('#counter')!)
+const scenes = Array.from(document.querySelectorAll<HTMLElement>('[data-scene]'))
+const caseControls = getRequiredElement<HTMLElement>('#case-controls')
+const sceneProgress = getRequiredElement<HTMLElement>('#scene-progress')
+const openButton = getRequiredElement<HTMLButtonElement>('#open-case')
+const audioButton = getRequiredElement<HTMLButtonElement>('#audio-control')
+const audioStatus = getRequiredElement<HTMLElement>('#audio-status')
+const appealButton = getRequiredElement<HTMLButtonElement>('#appeal-button')
+const confettiContainer = getRequiredElement<HTMLElement>('#confetti')
+const celebrationStatus = getRequiredElement<HTMLElement>('#celebration-status')
+
+const audio = setupAudio(audioButton, audioStatus, { ...audioAsset })
+
+openButton.addEventListener('click', () => {
+  void audio.start()
+})
+
+setupSceneController(scenes, {
+  progressElement: sceneProgress,
+  onSceneChange: ({ index }) => {
+    const caseIsOpen = index > 0
+    caseControls.hidden = !caseIsOpen
+    document.body.classList.toggle('case-is-open', caseIsOpen)
+    document.body.dataset.sceneIndex = String(index)
+  },
+})
+
+setupConfetti(appealButton, confettiContainer, celebrationStatus)

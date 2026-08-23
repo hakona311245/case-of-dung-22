@@ -1,39 +1,35 @@
 :root {
-  /* Core Color Palette - Luxury Editorial & Modern Dossier */
+  /* Core Palette - Editorial Legal Document & Personal Case File */
   --royal-blue: #2457d6;
-  --royal-blue-hover: #1c47b5;
-  --royal-blue-glow: rgba(36, 87, 214, 0.18);
-  --royal-blue-soft: rgba(36, 87, 214, 0.08);
+  --royal-ink: #17378d;
+  --deep-navy: #111d35;
   --bright-blue: #3478f6;
-  --sky-blue: #68a9ff;
   --baby-blue: #b9dcff;
-  --baby-blue-soft: #e2f0ff;
-  --light-blue: #edf6ff;
-  --ice-blue: #f4f8fe;
-  --off-white: #fafcff;
-  --white: #ffffff;
+  --baby-blue-soft: #eaf3fd;
+  --light-blue: #f2f7fc;
+  --ice-blue: #f5f8fc;
+  --off-white: #f8fafc;
+  --paper-white: #ffffff;
   
-  /* Text & Structural Ink */
-  --text-main: #121b2f;
-  --text-body: #1c2945;
-  --text-muted: #536785;
-  --text-subtle: #8293ad;
+  /* Text & Ink Hierarchy */
+  --text-main: #111b2b;
+  --text-body: #1f2c42;
+  --text-muted: #586b86;
+  --text-subtle: #8596ae;
   
-  /* Borders & Rules */
-  --border-subtle: #e1ebf7;
-  --border-card: #d0e0f3;
-  --border-accent: #2457d6;
-  --border-glow: rgba(52, 120, 246, 0.35);
+  /* Document Borders & Hairlines */
+  --border-subtle: #e5edf5;
+  --border-card: #d4e0ee;
+  --border-ink: #111b2b;
+  --border-royal: #2457d6;
   
-  /* Status Colors */
-  --status-active-bg: #e8f2ff;
-  --status-active-text: #2457d6;
-  --status-active-border: #b9dcff;
-  --status-highlight-bg: #eef6ff;
-  --status-highlight-text: #1742a8;
-  --status-stamp-bg: #fff5f5;
-  --status-stamp-text: #c53030;
-  --status-stamp-border: #feb2b2;
+  /* Docket & Stamp Status Colors */
+  --status-text: #2f4568;
+  --status-bg: #f3f7fb;
+  --status-border: #cad9ec;
+  --status-stamp-text: #b92525;
+  --status-stamp-bg: #fff6f6;
+  --status-stamp-border: #fca5a5;
   
   /* Typography System */
   --font-display: "Source Serif 4", Georgia, "Times New Roman", serif;
@@ -41,25 +37,25 @@
   
   --display-leading: 1.12;
   --display-tracking: -0.015em;
-  --label-tracking: 0.06em;
-  --control-tracking: 0.045em;
+  --label-tracking: 0.07em;
+  --control-tracking: 0.05em;
   
   /* Layout Dimensions */
   --content-width: 66rem;
-  --card-radius: 4px;
-  --btn-radius: 3px;
+  --card-radius: 3px;
+  --btn-radius: 2px;
   --dossier-padding-x: clamp(1.25rem, 3.8vw, 2.75rem);
   --dossier-padding-y: clamp(1.25rem, 3.2dvh, 2.25rem);
   
-  /* Elevation & Shadows */
-  --shadow-dossier: 0 16px 40px -12px rgba(18, 27, 47, 0.07), 0 2px 6px rgba(18, 27, 47, 0.03);
-  --shadow-elevated: 0 24px 56px -16px rgba(36, 87, 214, 0.11), 0 4px 12px rgba(18, 27, 47, 0.04);
-  --shadow-btn: 0 4px 14px -2px rgba(36, 87, 214, 0.35);
-  --shadow-stamp: 0 2px 8px rgba(36, 87, 214, 0.12);
+  /* Elevation & Tactile Shadows */
+  --shadow-dossier: 0 12px 32px -8px rgba(17, 27, 43, 0.06), 0 2px 4px rgba(17, 27, 43, 0.02);
+  --shadow-elevated: 0 20px 44px -12px rgba(17, 27, 43, 0.09), 0 3px 8px rgba(17, 27, 43, 0.03);
+  --shadow-btn: 0 3px 10px -2px rgba(17, 29, 53, 0.25);
+  --shadow-stamp: 0 2px 6px rgba(185, 37, 37, 0.1);
 }
 
 /* ==========================================================================
-   Base & Reset
+   Base & Document Atmosphere
    ========================================================================== */
 
 * {
@@ -82,13 +78,9 @@ body {
   margin: 0;
   overflow: hidden;
   background-color: var(--off-white);
-  /* Dossier background texture */
+  /* Refined, natural paper/dossier atmosphere without geometric grids */
   background-image: 
-    radial-gradient(ellipse at 85% 15%, rgba(185, 220, 255, 0.35) 0%, transparent 55%),
-    radial-gradient(ellipse at 15% 85%, rgba(237, 246, 255, 0.6) 0%, transparent 60%),
-    linear-gradient(rgba(36, 87, 214, 0.025) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(36, 87, 214, 0.025) 1px, transparent 1px);
-  background-size: 100% 100%, 100% 100%, 32px 32px, 32px 32px;
+    radial-gradient(ellipse at 50% 0%, #ffffff 0%, #f4f7fb 100%);
   background-attachment: fixed;
   color: var(--text-body);
   font-family: var(--font-body);
@@ -140,7 +132,7 @@ img {
 }
 
 /* ==========================================================================
-   Typography
+   Typography & Editorial Scale
    ========================================================================== */
 
 h1,
@@ -197,14 +189,15 @@ p {
 code {
   font-family: ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
   font-size: 0.72rem;
-  color: var(--royal-blue);
+  color: var(--text-muted);
   background: var(--light-blue);
   padding: 0.15rem 0.4rem;
+  border: 1px solid var(--border-subtle);
   border-radius: 2px;
   overflow-wrap: anywhere;
 }
 
-/* Labels & Legal Metadata */
+/* Labels & Legal Document Metadata */
 .eyebrow,
 .case-number,
 .metadata,
@@ -223,23 +216,23 @@ code {
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
-  color: var(--royal-blue);
+  color: var(--royal-ink);
   margin-bottom: 0.45rem;
   font-size: 0.7rem;
 }
 
 .eyebrow::before {
-  content: "";
+  content: "§";
   display: inline-block;
-  width: 5px;
-  height: 5px;
-  background-color: var(--royal-blue);
-  border-radius: 1px;
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--royal-blue);
 }
 
 .case-number {
   display: inline-block;
-  color: var(--royal-blue);
+  color: var(--royal-ink);
   font-size: 0.78rem;
   font-weight: 800;
   letter-spacing: 0.08em;
@@ -265,7 +258,7 @@ code {
 .statement {
   position: relative;
   padding-left: 0.95rem;
-  border-left: 2.5px solid var(--royal-blue);
+  border-left: 2px solid var(--royal-blue);
   margin-block: 0.65rem 0.75rem;
 }
 
@@ -276,7 +269,7 @@ code {
 }
 
 /* ==========================================================================
-   Scene Architecture & Container
+   Scene Architecture & Dossier Sheet Container
    ========================================================================== */
 
 .scene {
@@ -302,37 +295,37 @@ code {
   width: min(100%, var(--content-width));
   flex-direction: column;
   justify-content: flex-start;
-  background: var(--white);
+  background: var(--paper-white);
   border: 1px solid var(--border-card);
   border-radius: var(--card-radius);
   padding: var(--dossier-padding-y) var(--dossier-padding-x);
   box-shadow: var(--shadow-dossier);
 }
 
-/* Document crop marks / registration ticks on active inner cards */
+/* Restrained archival registration marks on document corners */
 .scene__inner::before,
 .scene__inner::after {
   content: "";
   position: absolute;
-  width: 10px;
-  height: 10px;
+  width: 9px;
+  height: 9px;
   pointer-events: none;
-  border-color: var(--royal-blue);
-  opacity: 0.45;
+  border-color: var(--text-muted);
+  opacity: 0.35;
 }
 
 .scene__inner::before {
   top: 6px;
   left: 6px;
-  border-top: 1.5px solid;
-  border-left: 1.5px solid;
+  border-top: 1px solid;
+  border-left: 1px solid;
 }
 
 .scene__inner::after {
   bottom: 6px;
   right: 6px;
-  border-bottom: 1.5px solid;
-  border-right: 1.5px solid;
+  border-bottom: 1px solid;
+  border-right: 1px solid;
 }
 
 .scene__layout {
@@ -356,7 +349,7 @@ code {
 }
 
 /* ==========================================================================
-   Buttons & Interactive Controls
+   Editorial Document CTA System
    ========================================================================== */
 
 .button {
@@ -366,10 +359,10 @@ code {
   justify-content: center;
   gap: 0.55rem;
   min-height: 2.75rem;
-  padding: 0.7rem 1.5rem;
-  background-color: var(--royal-blue);
-  color: var(--white);
-  border: 1px solid var(--royal-blue);
+  padding: 0.7rem 1.6rem;
+  background-color: var(--deep-navy);
+  color: var(--paper-white);
+  border: 1px solid var(--deep-navy);
   border-radius: var(--btn-radius);
   font-family: var(--font-body);
   font-size: 0.78rem;
@@ -378,10 +371,10 @@ code {
   text-transform: uppercase;
   box-shadow: var(--shadow-btn);
   transition: 
-    background-color 180ms ease,
-    border-color 180ms ease,
+    background-color 160ms ease,
+    border-color 160ms ease,
     transform 160ms ease,
-    box-shadow 180ms ease;
+    box-shadow 160ms ease;
   user-select: none;
 }
 
@@ -391,14 +384,14 @@ code {
   font-family: var(--font-body);
   font-size: 0.95rem;
   line-height: 1;
-  transition: transform 180ms ease;
+  transition: transform 160ms ease;
 }
 
 .button:hover {
-  background-color: var(--royal-blue-hover);
-  border-color: var(--royal-blue-hover);
+  background-color: var(--royal-ink);
+  border-color: var(--royal-ink);
   transform: translateY(-1px);
-  box-shadow: 0 6px 18px -2px rgba(36, 87, 214, 0.4);
+  box-shadow: 0 5px 16px -2px rgba(23, 55, 141, 0.35);
 }
 
 .button:hover::after {
@@ -413,28 +406,23 @@ code {
 .button:focus-visible,
 .audio-control:focus-visible,
 [tabindex="-1"]:focus-visible {
-  outline: 3px solid var(--bright-blue);
+  outline: 2px solid var(--bright-blue);
   outline-offset: 3px;
 }
 
 .button:disabled {
-  background-color: var(--royal-blue);
-  border-color: var(--royal-blue);
-  color: var(--white);
+  background-color: var(--deep-navy);
+  border-color: var(--deep-navy);
+  color: var(--paper-white);
   opacity: 0.85;
   cursor: default;
   transform: none;
 }
 
-.audio-control:disabled {
-  background-color: var(--ice-blue);
-  border-color: var(--border-card);
-  color: var(--text-muted);
-  box-shadow: none;
-  cursor: not-allowed;
-}
+/* ==========================================================================
+   Utility Controls (Marginal Case-File Metadata)
+   ========================================================================== */
 
-/* Controls Bar (Top Right) */
 .case-controls {
   position: fixed;
   top: clamp(0.5rem, 1.5vw, 0.9rem);
@@ -443,19 +431,17 @@ code {
   display: flex;
   align-items: center;
   gap: 0.35rem;
-  background: rgba(255, 255, 255, 0.92);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  background: var(--paper-white);
   border: 1px solid var(--border-card);
-  border-radius: 18px;
-  padding: 0.2rem 0.3rem;
-  box-shadow: 0 4px 18px rgba(18, 27, 47, 0.08);
+  border-radius: var(--card-radius);
+  padding: 0.2rem 0.35rem;
+  box-shadow: 0 2px 8px rgba(17, 27, 43, 0.05);
 }
 
 .scene-progress {
   margin: 0;
-  padding: 0.25rem 0.5rem;
-  color: var(--royal-blue);
+  padding: 0.25rem 0.55rem;
+  color: var(--text-main);
   font-weight: 800;
   font-size: 0.68rem;
   letter-spacing: 0.08em;
@@ -465,7 +451,7 @@ code {
 .audio-control {
   min-height: 1.7rem;
   padding: 0.25rem 0.6rem;
-  border-radius: 12px;
+  border-radius: 2px;
   background: transparent;
   color: var(--text-muted);
   font-size: 0.68rem;
@@ -477,11 +463,16 @@ code {
 
 .audio-control:hover:not(:disabled) {
   background-color: var(--light-blue);
-  color: var(--royal-blue);
+  color: var(--royal-ink);
+}
+
+.audio-control:disabled {
+  color: var(--text-subtle);
+  cursor: default;
 }
 
 /* ==========================================================================
-   Photo Slots & Placeholders
+   Photo Slots & Archival Evidence Mounts
    ========================================================================== */
 
 .photo-group {
@@ -498,8 +489,7 @@ code {
   overflow: hidden;
   border: 1px solid var(--border-card);
   border-radius: var(--card-radius);
-  background: var(--light-blue);
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.6), 0 4px 14px rgba(18, 27, 47, 0.04);
+  background: var(--ice-blue);
 }
 
 .photo-slot img {
@@ -509,13 +499,38 @@ code {
   transition: transform 300ms ease;
 }
 
+/* Archival mount placeholder */
 .photo-slot--placeholder {
   display: grid;
   place-items: center;
-  border: 1px dashed var(--royal-blue);
-  background: 
-    linear-gradient(135deg, var(--light-blue) 0%, var(--ice-blue) 100%),
-    repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(36, 87, 214, 0.02) 10px, rgba(36, 87, 214, 0.02) 20px);
+  border: 1px solid var(--border-card);
+  background: var(--ice-blue);
+}
+
+/* Corner photo-mounting brackets */
+.photo-slot--placeholder::before,
+.photo-slot--placeholder::after {
+  content: "";
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  pointer-events: none;
+  border-color: var(--text-muted);
+  opacity: 0.3;
+}
+
+.photo-slot--placeholder::before {
+  top: 8px;
+  left: 8px;
+  border-top: 1.5px solid;
+  border-left: 1.5px solid;
+}
+
+.photo-slot--placeholder::after {
+  bottom: 8px;
+  right: 8px;
+  border-bottom: 1.5px solid;
+  border-right: 1.5px solid;
 }
 
 .photo-slot--placeholder figcaption {
@@ -528,15 +543,16 @@ code {
 
 .photo-slot--placeholder span {
   font-size: 0.82rem;
-  font-weight: 750;
-  color: var(--royal-blue);
+  font-weight: 700;
+  color: var(--text-body);
   letter-spacing: 0.02em;
 }
 
 .photo-slot--placeholder code {
   margin-inline: auto;
-  background: rgba(255, 255, 255, 0.85);
-  border: 1px solid var(--border-card);
+  color: var(--text-muted);
+  background: var(--paper-white);
+  border: 1px solid var(--border-subtle);
 }
 
 /* ==========================================================================
@@ -544,8 +560,8 @@ code {
    ========================================================================== */
 
 .case-cover .case-cover__inner {
-  border: 2px solid var(--royal-blue);
-  background: var(--white);
+  border: 1px solid var(--border-card);
+  background: var(--paper-white);
   padding: clamp(1.75rem, 4.5dvh, 3.5rem) clamp(1.25rem, 4vw, 3rem);
   box-shadow: var(--shadow-elevated);
 }
@@ -557,13 +573,18 @@ code {
   margin-bottom: 0.95rem;
 }
 
+/* Filing label / document identifier */
 .case-cover .case-number {
-  font-size: clamp(0.78rem, 1.6vw, 0.92rem);
-  padding: 0.25rem 0.7rem;
+  display: inline-flex;
+  align-self: flex-start;
+  width: fit-content;
+  font-size: clamp(0.74rem, 1.5vw, 0.86rem);
+  padding: 0.22rem 0.65rem;
   background: var(--light-blue);
-  border: 1px solid var(--baby-blue);
+  color: var(--royal-ink);
+  border: 1px solid var(--border-card);
   border-radius: 2px;
-  margin-bottom: 0.65rem;
+  margin-bottom: 0.75rem;
 }
 
 .case-cover h1 {
@@ -576,7 +597,7 @@ code {
   font-family: var(--font-display);
   font-style: italic;
   font-size: clamp(1rem, 2.3vw, 1.3rem);
-  color: var(--royal-blue);
+  color: var(--royal-ink);
   line-height: 1.4;
   margin-bottom: 0.95rem;
 }
@@ -599,17 +620,17 @@ code {
 }
 
 /* ==========================================================================
-   Scene 2: Opening Statement
+   Scene 2: Opening Statement (Editorial Typography)
    ========================================================================== */
 
 .opening .statement {
   font-size: clamp(0.95rem, 2.1vw, 1.18rem);
-  line-height: 1.58;
+  line-height: 1.6;
   color: var(--text-main);
-  background: var(--light-blue);
-  padding: 0.85rem 1.15rem;
-  border-left: 3.5px solid var(--royal-blue);
-  border-radius: 0 var(--card-radius) var(--card-radius) 0;
+  background: transparent;
+  padding: 0.2rem 0 0.2rem 1.15rem;
+  border-left: 2px solid var(--royal-blue);
+  border-radius: 0;
   margin-block: 0.65rem 0.75rem;
 }
 
@@ -626,8 +647,9 @@ code {
 
 .exhibit .eyebrow {
   background: var(--light-blue);
-  border: 1px solid var(--baby-blue);
-  padding: 0.2rem 0.55rem;
+  border: 1px solid var(--border-card);
+  color: var(--royal-ink);
+  padding: 0.15rem 0.5rem;
   border-radius: 2px;
 }
 
@@ -637,9 +659,7 @@ code {
 
 /* Exhibit C: Graduation (Visual Peak) */
 .exhibit--graduation .scene__inner {
-  border-top: 3.5px solid var(--royal-blue);
-  background: 
-    linear-gradient(180deg, var(--white) 0%, var(--off-white) 100%);
+  border-top: 3px solid var(--royal-blue);
 }
 
 .case-closed {
@@ -667,16 +687,16 @@ code {
   display: inline-block;
   margin-top: 0.45rem;
   padding: 0.3rem 0.7rem;
-  background: var(--royal-blue);
-  color: var(--white);
+  background: var(--royal-ink);
+  color: var(--paper-white);
   border-radius: 2px;
   font-size: 0.68rem;
   letter-spacing: 0.08em;
-  box-shadow: var(--shadow-stamp);
+  box-shadow: 0 2px 6px rgba(23, 55, 141, 0.18);
 }
 
 /* ==========================================================================
-   Scene 6: Pending Proceedings (Docket Table)
+   Scene 6: Pending Proceedings (Typed Legal Docket Table)
    ========================================================================== */
 
 .pending .scene__inner {
@@ -686,7 +706,7 @@ code {
 .docket {
   margin: 0.75rem 0 0;
   padding: 0;
-  border-top: 1.5px solid var(--border-card);
+  border-top: 1px solid var(--border-card);
   list-style: none;
 }
 
@@ -715,15 +735,16 @@ code {
   line-height: 1.35;
 }
 
+/* Understated typed docket filing marks */
 .docket__item .status {
   display: inline-flex;
   align-items: center;
   justify-content: flex-start;
   align-self: center;
-  padding: 0.22rem 0.55rem;
-  background: var(--light-blue);
-  color: var(--royal-blue);
-  border: 1px solid var(--baby-blue);
+  padding: 0.2rem 0.55rem;
+  background: transparent;
+  color: var(--status-text);
+  border: 1px solid var(--border-card);
   border-radius: 2px;
   font-size: 0.68rem;
   font-weight: 750;
@@ -731,21 +752,22 @@ code {
   width: fit-content;
 }
 
-/* Prince item special review status treatment */
+/* Prince item: the one playful, slightly angled coral stamp */
 .docket__item:last-child .status {
   background: var(--status-stamp-bg);
   color: var(--status-stamp-text);
   border-color: var(--status-stamp-border);
-  transform: rotate(-1.5deg);
-  box-shadow: 0 2px 6px rgba(197, 48, 48, 0.1);
+  transform: rotate(-1.8deg);
+  box-shadow: var(--shadow-stamp);
+  font-weight: 800;
 }
 
 /* ==========================================================================
-   Scene 7: Final Judgment
+   Scene 7: Final Judgment (Verdict Certificate)
    ========================================================================== */
 
 .judgment .scene__inner {
-  border: 2px solid var(--royal-blue);
+  border: 1px solid var(--border-card);
   padding: clamp(1.5rem, 3.5dvh, 2.75rem) clamp(1.25rem, 3.8vw, 3rem);
   text-align: center;
   align-items: center;
@@ -772,6 +794,7 @@ code {
   margin-block: 0.45rem 0.65rem;
 }
 
+/* Celebratory birthday reveal - major royal blue focal point */
 .celebration {
   max-width: 18ch;
   margin-inline: auto;
@@ -801,7 +824,7 @@ code {
   font-style: italic;
   font-size: 1.75rem;
   font-weight: 500;
-  color: var(--royal-blue);
+  color: var(--royal-ink);
   line-height: 1.1;
 }
 
@@ -819,7 +842,7 @@ code {
 }
 
 /* ==========================================================================
-   Scene 8: Notice of Appeal
+   Scene 8: Notice of Appeal (Minimal Legal Footnote)
    ========================================================================== */
 
 .appeal .scene__inner {

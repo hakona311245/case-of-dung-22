@@ -1,30 +1,71 @@
 :root {
-  color: #17213a;
-  background: #fafcff;
-  font-family: var(--font-body);
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  --font-display: "Source Serif 4", Georgia, "Times New Roman", serif;
-  --font-body: Manrope, Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  --display-leading: 1.08;
-  --display-tracking: -0.012em;
-  --label-tracking: 0.075em;
-  --control-tracking: 0.055em;
+  /* Core Color Palette - Luxury Editorial & Modern Dossier */
   --royal-blue: #2457d6;
+  --royal-blue-hover: #1c47b5;
+  --royal-blue-glow: rgba(36, 87, 214, 0.18);
+  --royal-blue-soft: rgba(36, 87, 214, 0.08);
   --bright-blue: #3478f6;
+  --sky-blue: #68a9ff;
   --baby-blue: #b9dcff;
+  --baby-blue-soft: #e2f0ff;
   --light-blue: #edf6ff;
+  --ice-blue: #f4f8fe;
   --off-white: #fafcff;
   --white: #ffffff;
-  --text: #17213a;
-  --muted: #536079;
-  --border: #c8d5e8;
-  --content-width: 70rem;
+  
+  /* Text & Structural Ink */
+  --text-main: #121b2f;
+  --text-body: #1c2945;
+  --text-muted: #536785;
+  --text-subtle: #8293ad;
+  
+  /* Borders & Rules */
+  --border-subtle: #e1ebf7;
+  --border-card: #d0e0f3;
+  --border-accent: #2457d6;
+  --border-glow: rgba(52, 120, 246, 0.35);
+  
+  /* Status Colors */
+  --status-active-bg: #e8f2ff;
+  --status-active-text: #2457d6;
+  --status-active-border: #b9dcff;
+  --status-highlight-bg: #eef6ff;
+  --status-highlight-text: #1742a8;
+  --status-stamp-bg: #fff5f5;
+  --status-stamp-text: #c53030;
+  --status-stamp-border: #feb2b2;
+  
+  /* Typography System */
+  --font-display: "Source Serif 4", Georgia, "Times New Roman", serif;
+  --font-body: Manrope, Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  
+  --display-leading: 1.12;
+  --display-tracking: -0.015em;
+  --label-tracking: 0.06em;
+  --control-tracking: 0.045em;
+  
+  /* Layout Dimensions */
+  --content-width: 66rem;
+  --card-radius: 4px;
+  --btn-radius: 3px;
+  --dossier-padding-x: clamp(1.25rem, 3.8vw, 2.75rem);
+  --dossier-padding-y: clamp(1.25rem, 3.2dvh, 2.25rem);
+  
+  /* Elevation & Shadows */
+  --shadow-dossier: 0 16px 40px -12px rgba(18, 27, 47, 0.07), 0 2px 6px rgba(18, 27, 47, 0.03);
+  --shadow-elevated: 0 24px 56px -16px rgba(36, 87, 214, 0.11), 0 4px 12px rgba(18, 27, 47, 0.04);
+  --shadow-btn: 0 4px 14px -2px rgba(36, 87, 214, 0.35);
+  --shadow-stamp: 0 2px 8px rgba(36, 87, 214, 0.12);
 }
+
+/* ==========================================================================
+   Base & Reset
+   ========================================================================== */
 
 * {
   box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 html,
@@ -40,9 +81,22 @@ body {
   min-height: 100dvh;
   margin: 0;
   overflow: hidden;
-  background: var(--off-white);
-  color: var(--text);
-  line-height: 1.5;
+  background-color: var(--off-white);
+  /* Dossier background texture */
+  background-image: 
+    radial-gradient(ellipse at 85% 15%, rgba(185, 220, 255, 0.35) 0%, transparent 55%),
+    radial-gradient(ellipse at 15% 85%, rgba(237, 246, 255, 0.6) 0%, transparent 60%),
+    linear-gradient(rgba(36, 87, 214, 0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(36, 87, 214, 0.025) 1px, transparent 1px);
+  background-size: 100% 100%, 100% 100%, 32px 32px, 32px 32px;
+  background-attachment: fixed;
+  color: var(--text-body);
+  font-family: var(--font-body);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: 1.55;
 }
 
 #app,
@@ -71,6 +125,9 @@ select {
 
 button {
   touch-action: manipulation;
+  background: none;
+  border: none;
+  cursor: pointer;
 }
 
 img {
@@ -81,6 +138,10 @@ img {
 [hidden] {
   display: none !important;
 }
+
+/* ==========================================================================
+   Typography
+   ========================================================================== */
 
 h1,
 h2,
@@ -98,40 +159,125 @@ h1,
 h2 {
   font-family: var(--font-display);
   font-optical-sizing: auto;
+  color: var(--text-main);
   line-height: var(--display-leading);
   letter-spacing: var(--display-tracking);
   text-wrap: balance;
+  padding-top: 0.08em;
+  padding-bottom: 0.04em;
 }
 
 h1 {
-  max-width: 13ch;
-  margin-bottom: 0.85rem;
-  font-size: clamp(2.7rem, 12.4vw, 5.75rem);
+  max-width: 14ch;
+  margin-bottom: 0.65rem;
+  font-size: clamp(2rem, 5.5vw, 3.6rem);
   font-weight: 600;
 }
 
 h2 {
-  max-width: 19ch;
-  margin-bottom: 0.9rem;
-  font-size: clamp(2rem, 7.6vw, 4rem);
+  max-width: 20ch;
+  margin-bottom: 0.55rem;
+  font-size: clamp(1.5rem, 4vw, 2.4rem);
   font-weight: 600;
 }
 
 h3 {
-  margin-bottom: 0.2rem;
-  font-size: 1rem;
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text-main);
   line-height: 1.3;
+  margin-bottom: 0.1rem;
 }
 
 p {
-  margin-bottom: 0.8rem;
+  margin-bottom: 0.55rem;
 }
 
 code {
-  font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+  font-family: ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
   font-size: 0.72rem;
+  color: var(--royal-blue);
+  background: var(--light-blue);
+  padding: 0.15rem 0.4rem;
+  border-radius: 2px;
   overflow-wrap: anywhere;
 }
+
+/* Labels & Legal Metadata */
+.eyebrow,
+.case-number,
+.metadata,
+.fine-print,
+.status,
+.scene-progress {
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  font-weight: 750;
+  line-height: 1.35;
+  letter-spacing: var(--label-tracking);
+  text-transform: uppercase;
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--royal-blue);
+  margin-bottom: 0.45rem;
+  font-size: 0.7rem;
+}
+
+.eyebrow::before {
+  content: "";
+  display: inline-block;
+  width: 5px;
+  height: 5px;
+  background-color: var(--royal-blue);
+  border-radius: 1px;
+}
+
+.case-number {
+  display: inline-block;
+  color: var(--royal-blue);
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  margin-bottom: 0.45rem;
+}
+
+.metadata {
+  color: var(--text-muted);
+  font-size: 0.72rem;
+  margin-bottom: 0.75rem;
+}
+
+.lede,
+.statement {
+  max-width: 42rem;
+  color: var(--text-body);
+  font-size: clamp(0.95rem, 2vw, 1.16rem);
+  line-height: 1.58;
+  text-wrap: pretty;
+  font-weight: 450;
+}
+
+.statement {
+  position: relative;
+  padding-left: 0.95rem;
+  border-left: 2.5px solid var(--royal-blue);
+  margin-block: 0.65rem 0.75rem;
+}
+
+.fine-print {
+  color: var(--text-muted);
+  font-size: 0.65rem;
+  letter-spacing: 0.07em;
+}
+
+/* ==========================================================================
+   Scene Architecture & Container
+   ========================================================================== */
 
 .scene {
   position: absolute;
@@ -142,92 +288,126 @@ code {
   overflow-x: hidden;
   overflow-y: auto;
   overscroll-behavior: contain;
-  border: 1px solid var(--border);
-  background: var(--white);
+  background: transparent;
   pointer-events: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(0.75rem, 2vw, 1.75rem);
 }
 
 .scene__inner {
+  position: relative;
   display: flex;
   width: min(100%, var(--content-width));
-  min-height: 100%;
-  margin-inline: auto;
-  padding: clamp(2.5rem, 7dvh, 5rem) clamp(1.25rem, 5vw, 4rem);
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
+  background: var(--white);
+  border: 1px solid var(--border-card);
+  border-radius: var(--card-radius);
+  padding: var(--dossier-padding-y) var(--dossier-padding-x);
+  box-shadow: var(--shadow-dossier);
 }
 
-.case-is-open .scene__inner {
-  padding-top: clamp(5rem, 10dvh, 6rem);
+/* Document crop marks / registration ticks on active inner cards */
+.scene__inner::before,
+.scene__inner::after {
+  content: "";
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  pointer-events: none;
+  border-color: var(--royal-blue);
+  opacity: 0.45;
+}
+
+.scene__inner::before {
+  top: 6px;
+  left: 6px;
+  border-top: 1.5px solid;
+  border-left: 1.5px solid;
+}
+
+.scene__inner::after {
+  bottom: 6px;
+  right: 6px;
+  border-bottom: 1.5px solid;
+  border-right: 1.5px solid;
 }
 
 .scene__layout {
   display: grid;
   align-items: center;
-  gap: 1.25rem;
+  gap: clamp(1rem, 2.5vw, 2.25rem);
 }
 
 .scene__copy {
   max-width: 38rem;
 }
 
+.scene__media {
+  min-width: 0;
+}
+
 .scene__actions {
   display: flex;
-  margin-top: 1.25rem;
+  align-items: center;
+  margin-top: clamp(0.85rem, 2dvh, 1.4rem);
 }
 
-.eyebrow,
-.case-number,
-.metadata,
-.fine-print,
-.status,
-.scene-progress {
-  color: var(--muted);
-  font-size: 0.75rem;
-  font-weight: 700;
-  line-height: 1.45;
-  letter-spacing: var(--label-tracking);
-  text-transform: uppercase;
-}
+/* ==========================================================================
+   Buttons & Interactive Controls
+   ========================================================================== */
 
-.case-number {
-  color: var(--royal-blue);
-}
-
-.lede,
-.statement {
-  max-width: 42rem;
-  font-size: clamp(1.05rem, 3.3vw, 1.4rem);
-  line-height: 1.55;
-  text-wrap: pretty;
-}
-
-.fine-print {
-  margin-top: 1.25rem;
-  font-size: 0.68rem;
-}
-
-.button,
-.audio-control {
+.button {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
   min-height: 2.75rem;
+  padding: 0.7rem 1.5rem;
+  background-color: var(--royal-blue);
+  color: var(--white);
   border: 1px solid var(--royal-blue);
-  border-radius: 0;
-  background: var(--white);
-  color: var(--royal-blue);
-  cursor: pointer;
+  border-radius: var(--btn-radius);
+  font-family: var(--font-body);
   font-size: 0.78rem;
   font-weight: 750;
   letter-spacing: var(--control-tracking);
   text-transform: uppercase;
+  box-shadow: var(--shadow-btn);
+  transition: 
+    background-color 180ms ease,
+    border-color 180ms ease,
+    transform 160ms ease,
+    box-shadow 180ms ease;
+  user-select: none;
 }
 
-.button {
-  padding: 0.75rem 1rem;
+.button::after {
+  content: "→";
+  display: inline-block;
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  line-height: 1;
+  transition: transform 180ms ease;
 }
 
-.button:hover,
-.audio-control:hover:not(:disabled) {
-  background: var(--light-blue);
+.button:hover {
+  background-color: var(--royal-blue-hover);
+  border-color: var(--royal-blue-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px -2px rgba(36, 87, 214, 0.4);
+}
+
+.button:hover::after {
+  transform: translateX(3px);
+}
+
+.button:active {
+  transform: translateY(0);
+  box-shadow: var(--shadow-btn);
 }
 
 .button:focus-visible,
@@ -237,152 +417,440 @@ code {
   outline-offset: 3px;
 }
 
-.button:disabled,
+.button:disabled {
+  background-color: var(--royal-blue);
+  border-color: var(--royal-blue);
+  color: var(--white);
+  opacity: 0.85;
+  cursor: default;
+  transform: none;
+}
+
 .audio-control:disabled {
-  border-color: var(--border);
-  color: var(--muted);
+  background-color: var(--ice-blue);
+  border-color: var(--border-card);
+  color: var(--text-muted);
+  box-shadow: none;
   cursor: not-allowed;
 }
 
+/* Controls Bar (Top Right) */
 .case-controls {
   position: fixed;
-  top: 0.6rem;
-  right: 0.6rem;
-  z-index: 20;
+  top: clamp(0.5rem, 1.5vw, 0.9rem);
+  right: clamp(0.5rem, 1.5vw, 1rem);
+  z-index: 50;
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.35rem;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--border-card);
+  border-radius: 18px;
+  padding: 0.2rem 0.3rem;
+  box-shadow: 0 4px 18px rgba(18, 27, 47, 0.08);
 }
 
 .scene-progress {
   margin: 0;
-  padding: 0.45rem 0.6rem;
-  background: var(--white);
-  box-shadow: 0 2px 10px rgb(23 33 58 / 8%);
+  padding: 0.25rem 0.5rem;
+  color: var(--royal-blue);
+  font-weight: 800;
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  border-right: 1px solid var(--border-subtle);
 }
 
 .audio-control {
-  padding-inline: 0.75rem;
-  box-shadow: 0 2px 10px rgb(23 33 58 / 8%);
+  min-height: 1.7rem;
+  padding: 0.25rem 0.6rem;
+  border-radius: 12px;
+  background: transparent;
+  color: var(--text-muted);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  transition: color 150ms ease, background-color 150ms ease;
 }
+
+.audio-control:hover:not(:disabled) {
+  background-color: var(--light-blue);
+  color: var(--royal-blue);
+}
+
+/* ==========================================================================
+   Photo Slots & Placeholders
+   ========================================================================== */
 
 .photo-group {
   display: grid;
   gap: 0.75rem;
-  margin-top: 1rem;
+  width: 100%;
 }
 
 .photo-slot {
   position: relative;
   width: 100%;
-  height: clamp(12rem, 30dvh, 20rem);
+  height: clamp(10rem, 24dvh, 16rem);
   margin-bottom: 0;
   overflow: hidden;
-  border: 1px solid var(--border);
+  border: 1px solid var(--border-card);
+  border-radius: var(--card-radius);
   background: var(--light-blue);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.6), 0 4px 14px rgba(18, 27, 47, 0.04);
 }
 
 .photo-slot img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  transition: transform 300ms ease;
 }
 
 .photo-slot--placeholder {
   display: grid;
   place-items: center;
-  border-style: dashed;
+  border: 1px dashed var(--royal-blue);
+  background: 
+    linear-gradient(135deg, var(--light-blue) 0%, var(--ice-blue) 100%),
+    repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(36, 87, 214, 0.02) 10px, rgba(36, 87, 214, 0.02) 20px);
 }
 
 .photo-slot--placeholder figcaption {
   display: grid;
   max-width: 18rem;
-  gap: 0.4rem;
-  padding: 1rem;
+  gap: 0.35rem;
+  padding: 0.85rem;
   text-align: center;
 }
 
 .photo-slot--placeholder span {
-  font-weight: 700;
+  font-size: 0.82rem;
+  font-weight: 750;
+  color: var(--royal-blue);
+  letter-spacing: 0.02em;
 }
 
-.case-closed,
-.celebration {
-  margin-block: 1.25rem 0.4rem;
-  color: var(--royal-blue);
+.photo-slot--placeholder code {
+  margin-inline: auto;
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid var(--border-card);
+}
+
+/* ==========================================================================
+   Scene 1: Case Cover
+   ========================================================================== */
+
+.case-cover .case-cover__inner {
+  border: 2px solid var(--royal-blue);
+  background: var(--white);
+  padding: clamp(1.75rem, 4.5dvh, 3.5rem) clamp(1.25rem, 4vw, 3rem);
+  box-shadow: var(--shadow-elevated);
+}
+
+.case-cover .eyebrow {
+  color: var(--text-muted);
+  font-size: 0.7rem;
+  letter-spacing: 0.09em;
+  margin-bottom: 0.95rem;
+}
+
+.case-cover .case-number {
+  font-size: clamp(0.78rem, 1.6vw, 0.92rem);
+  padding: 0.25rem 0.7rem;
+  background: var(--light-blue);
+  border: 1px solid var(--baby-blue);
+  border-radius: 2px;
+  margin-bottom: 0.65rem;
+}
+
+.case-cover h1 {
+  font-size: clamp(2rem, 5.8vw, 3.8rem);
+  line-height: 1.08;
+  margin-bottom: 0.75rem;
+}
+
+.case-cover .lede {
   font-family: var(--font-display);
-  font-optical-sizing: auto;
-  font-weight: 600;
-  letter-spacing: var(--display-tracking);
-  text-wrap: balance;
+  font-style: italic;
+  font-size: clamp(1rem, 2.3vw, 1.3rem);
+  color: var(--royal-blue);
+  line-height: 1.4;
+  margin-bottom: 0.95rem;
+}
+
+.case-cover .metadata {
+  display: inline-block;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--border-subtle);
+  width: 100%;
+  max-width: 20rem;
+  margin-bottom: 0.95rem;
+}
+
+.case-cover .fine-print {
+  margin-top: 1rem;
+  padding-top: 0.55rem;
+  border-top: 1px solid var(--border-subtle);
+  color: var(--text-muted);
+  font-size: 0.65rem;
+}
+
+/* ==========================================================================
+   Scene 2: Opening Statement
+   ========================================================================== */
+
+.opening .statement {
+  font-size: clamp(0.95rem, 2.1vw, 1.18rem);
+  line-height: 1.58;
+  color: var(--text-main);
+  background: var(--light-blue);
+  padding: 0.85rem 1.15rem;
+  border-left: 3.5px solid var(--royal-blue);
+  border-radius: 0 var(--card-radius) var(--card-radius) 0;
+  margin-block: 0.65rem 0.75rem;
+}
+
+.opening .scene__copy p:last-of-type {
+  font-style: italic;
+  color: var(--text-muted);
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
+/* ==========================================================================
+   Exhibit Scenes (3, 4, 5)
+   ========================================================================== */
+
+.exhibit .eyebrow {
+  background: var(--light-blue);
+  border: 1px solid var(--baby-blue);
+  padding: 0.2rem 0.55rem;
+  border-radius: 2px;
+}
+
+.exhibit .eyebrow::before {
+  display: none;
+}
+
+/* Exhibit C: Graduation (Visual Peak) */
+.exhibit--graduation .scene__inner {
+  border-top: 3.5px solid var(--royal-blue);
+  background: 
+    linear-gradient(180deg, var(--white) 0%, var(--off-white) 100%);
 }
 
 .case-closed {
-  font-size: clamp(2.2rem, 8.5vw, 5.25rem);
+  margin-block: 0.45rem 0.15rem;
+  color: var(--royal-blue);
+  font-family: var(--font-display);
+  font-size: clamp(1.85rem, 5.5vw, 3.6rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
   line-height: 1.02;
-}
-
-.celebration {
-  max-width: 18ch;
-  font-size: clamp(2.1rem, 8.2vw, 5rem);
-  line-height: 1;
+  text-wrap: balance;
+  padding-top: 0.05em;
 }
 
 .subheading {
-  font-size: clamp(1.15rem, 4vw, 1.6rem);
+  font-family: var(--font-display);
+  font-size: clamp(0.98rem, 2.3vw, 1.3rem);
+  font-weight: 600;
+  color: var(--text-main);
+  line-height: 1.3;
+  margin-bottom: 0.55rem;
+}
+
+.exhibit--graduation .status {
+  display: inline-block;
+  margin-top: 0.45rem;
+  padding: 0.3rem 0.7rem;
+  background: var(--royal-blue);
+  color: var(--white);
+  border-radius: 2px;
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  box-shadow: var(--shadow-stamp);
+}
+
+/* ==========================================================================
+   Scene 6: Pending Proceedings (Docket Table)
+   ========================================================================== */
+
+.pending .scene__inner {
+  max-width: 52rem;
 }
 
 .docket {
   margin: 0.75rem 0 0;
   padding: 0;
-  border-top: 1px solid var(--border);
+  border-top: 1.5px solid var(--border-card);
   list-style: none;
 }
 
 .docket__item {
+  position: relative;
   display: grid;
-  gap: 0.4rem;
-  padding: 0.75rem 0;
-  border-bottom: 1px solid var(--border);
+  gap: 0.25rem;
+  padding: 0.65rem 0.35rem;
+  border-bottom: 1px solid var(--border-subtle);
+  transition: background-color 150ms ease;
+}
+
+.docket__item:hover {
+  background-color: var(--ice-blue);
+}
+
+.docket__item h3 {
+  font-size: 0.94rem;
+  margin-bottom: 0.05rem;
 }
 
 .docket__item p {
+  color: var(--text-muted);
+  font-size: 0.84rem;
   margin-bottom: 0;
+  line-height: 1.35;
 }
 
 .docket__item .status {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start;
+  align-self: center;
+  padding: 0.22rem 0.55rem;
+  background: var(--light-blue);
   color: var(--royal-blue);
+  border: 1px solid var(--baby-blue);
+  border-radius: 2px;
+  font-size: 0.68rem;
+  font-weight: 750;
+  letter-spacing: 0.05em;
+  width: fit-content;
+}
+
+/* Prince item special review status treatment */
+.docket__item:last-child .status {
+  background: var(--status-stamp-bg);
+  color: var(--status-stamp-text);
+  border-color: var(--status-stamp-border);
+  transform: rotate(-1.5deg);
+  box-shadow: 0 2px 6px rgba(197, 48, 48, 0.1);
+}
+
+/* ==========================================================================
+   Scene 7: Final Judgment
+   ========================================================================== */
+
+.judgment .scene__inner {
+  border: 2px solid var(--royal-blue);
+  padding: clamp(1.5rem, 3.5dvh, 2.75rem) clamp(1.25rem, 3.8vw, 3rem);
+  text-align: center;
+  align-items: center;
+  box-shadow: var(--shadow-elevated);
+}
+
+.judgment .eyebrow {
+  margin-bottom: 0.35rem;
+}
+
+.judgment h2 {
+  font-size: clamp(1.6rem, 4vw, 2.5rem);
+  margin-bottom: 0.55rem;
+}
+
+.judgment .statement {
+  max-width: 36rem;
+  margin-inline: auto;
+  border-left: none;
+  padding: 0;
+  font-size: clamp(0.94rem, 2vw, 1.14rem);
+  line-height: 1.58;
+  color: var(--text-body);
+  margin-block: 0.45rem 0.65rem;
+}
+
+.celebration {
+  max-width: 18ch;
+  margin-inline: auto;
+  margin-block: 0.65rem 0.55rem;
+  color: var(--royal-blue);
+  font-family: var(--font-display);
+  font-size: clamp(1.7rem, 4.6vw, 3rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.08;
+  text-wrap: balance;
+  padding-top: 0.05em;
 }
 
 .signature {
-  margin-top: 1.5rem;
-  padding-top: 1rem;
-  border-top: 1px solid var(--border);
+  margin-top: 0.75rem;
+  padding-top: 0.55rem;
+  border-top: 1px solid var(--border-subtle);
+  width: 100%;
+  max-width: 15rem;
+  margin-inline: auto;
 }
 
 .signature p:first-child {
-  margin-bottom: 0.15rem;
+  margin-bottom: 0.05rem;
   font-family: var(--font-display);
-  font-optical-sizing: auto;
-  font-size: 1.8rem;
+  font-style: italic;
+  font-size: 1.75rem;
   font-weight: 500;
-  line-height: 1.2;
+  color: var(--royal-blue);
+  line-height: 1.1;
 }
 
 .signature p:last-child {
-  color: var(--muted);
-  font-size: 0.82rem;
+  color: var(--text-muted);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.judgment .scene__actions {
+  justify-content: center;
+  margin-top: 0.75rem;
+}
+
+/* ==========================================================================
+   Scene 8: Notice of Appeal
+   ========================================================================== */
+
+.appeal .scene__inner {
+  max-width: 38rem;
+  text-align: center;
+  align-items: center;
+  padding: clamp(1.75rem, 4dvh, 3rem) clamp(1.25rem, 3.8vw, 2.75rem);
+}
+
+.appeal p {
+  max-width: 28rem;
+  font-size: clamp(0.95rem, 2vw, 1.15rem);
+  color: var(--text-body);
+  line-height: 1.55;
+}
+
+.appeal .scene__actions {
+  justify-content: center;
+  margin-top: 1rem;
 }
 
 .confetti {
   position: absolute;
-  right: 50%;
-  bottom: 5rem;
+  left: 50%;
+  top: 50%;
   width: 1px;
   height: 1px;
   pointer-events: none;
 }
 
+/* Accessibility screen-reader only */
 .sr-only {
   position: absolute;
   width: 1px;

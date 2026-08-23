@@ -1,44 +1,165 @@
+/* ==========================================================================
+   Desktop & Tablet Layout Enhancements (>= 48rem / 768px)
+   ========================================================================== */
+
 @media (min-width: 48rem) {
-  .scene__layout {
-    grid-template-columns: minmax(0, 1fr) minmax(16rem, 0.85fr);
-    gap: clamp(2rem, 7vw, 6rem);
+  :root {
+    --dossier-padding-x: clamp(2rem, 4.5vw, 3.5rem);
+    --dossier-padding-y: clamp(1.75rem, 4dvh, 3rem);
   }
 
+  .scene__layout {
+    grid-template-columns: minmax(0, 1.15fr) minmax(16rem, 0.85fr);
+    gap: clamp(2rem, 4vw, 4rem);
+    align-items: center;
+  }
+
+  /* Opening & Exhibits Layout */
+  .opening .scene__layout,
+  #exhibit-childhood .scene__layout {
+    grid-template-columns: minmax(0, 1.15fr) minmax(16rem, 0.85fr);
+  }
+
+  #exhibit-graduation .scene__layout {
+    grid-template-columns: minmax(0, 1.1fr) minmax(16rem, 0.9fr);
+  }
+
+  /* High School Multi-Photo vs Single Photo */
   .photo-group {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .photo-group > :only-child {
+  .photo-group--single {
+    grid-template-columns: 1fr;
+  }
+
+  .photo-group--single .photo-slot {
     max-width: 38rem;
   }
 
-  #exhibit-high-school .photo-group > :only-child {
+  #exhibit-high-school .scene__inner {
+    max-width: 48rem;
+  }
+
+  #exhibit-high-school .photo-group--single .photo-slot {
     grid-column: 1 / -1;
-    width: min(68%, 46rem);
-    max-width: none;
+    width: 100%;
+    max-width: 42rem;
+    height: min(34dvh, 20rem);
+    margin-inline: 0;
   }
 
   .photo-slot--secondary {
-    margin-top: 3rem;
+    margin-top: 1.5rem;
   }
 
   .photo-slot {
-    height: min(48dvh, 34rem);
+    height: min(36dvh, 20rem);
   }
 
+  /* Docket item desktop row layout */
   .docket__item {
-    grid-template-columns: minmax(0, 1fr) minmax(12rem, 0.4fr);
-    align-items: start;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 1.25rem;
+    padding: 0.85rem 0.6rem;
   }
 
   .docket__item .status {
-    text-align: right;
+    justify-self: end;
+  }
+
+  /* Scene Width Constraints */
+  .case-cover .scene__inner {
+    max-width: 44rem;
+  }
+
+  .judgment .scene__inner {
+    max-width: 48rem;
+  }
+
+  .appeal .scene__inner {
+    max-width: 38rem;
   }
 }
 
-@media (max-width: 30rem) {
+/* ==========================================================================
+   Large Desktop Enhancements (>= 64rem / 1024px)
+   ========================================================================== */
+
+@media (min-width: 64rem) {
+  .scene__layout {
+    gap: clamp(2.5rem, 4.5vw, 4.5rem);
+  }
+
+  .photo-slot {
+    height: min(38dvh, 22rem);
+  }
+}
+
+/* ==========================================================================
+   Mobile Optimization (< 48rem / 768px)
+   ========================================================================== */
+
+@media (max-width: 47.99rem) {
+  .scene {
+    padding: clamp(0.5rem, 2vw, 1rem);
+    align-items: center;
+  }
+
   .scene__inner {
-    padding-inline: 1rem;
+    max-height: calc(100dvh - clamp(1rem, 3vw, 2rem));
+    padding: clamp(1.25rem, 3.5dvh, 2rem) clamp(1rem, 3.5vw, 1.5rem);
+    margin-block: auto;
+  }
+
+  .scene__layout {
+    grid-template-columns: 1fr;
+    gap: 0.85rem;
+  }
+
+  .photo-slot {
+    height: clamp(9.5rem, 22dvh, 13.5rem);
+  }
+
+  .photo-group--single .photo-slot {
+    height: clamp(9.5rem, 23dvh, 14rem);
+  }
+
+  .docket__item {
+    gap: 0.4rem;
+    padding: 0.65rem 0.2rem;
+  }
+
+  .docket__item .status {
+    margin-top: 0.1rem;
+  }
+
+  .case-cover .case-cover__inner {
+    padding: clamp(1.5rem, 4dvh, 2.5rem) clamp(1rem, 3.5vw, 1.5rem);
+  }
+
+  .button {
+    width: 100%;
+  }
+
+  .scene__actions {
+    width: 100%;
+    margin-top: 0.85rem;
+  }
+}
+
+/* ==========================================================================
+   Small Mobile (< 30rem / 480px)
+   ========================================================================== */
+
+@media (max-width: 30rem) {
+  .scene {
+    padding: 0.4rem;
+  }
+
+  .scene__inner {
+    padding: 1.15rem 0.95rem;
   }
 
   .case-controls {
@@ -48,7 +169,43 @@
 
   .audio-control,
   .scene-progress {
-    padding-inline: 0.6rem;
-    font-size: 0.68rem;
+    padding: 0.2rem 0.45rem;
+    font-size: 0.65rem;
   }
 }
+
+/* ==========================================================================
+   Short Viewport Accommodations (max-height: 44rem / 700px)
+   ========================================================================== */
+
+@media (max-height: 44rem) {
+  .scene {
+    align-items: flex-start;
+  }
+
+  .scene__inner {
+    padding-block: 1rem;
+  }
+
+  .photo-slot {
+    height: clamp(8rem, 18dvh, 11rem);
+  }
+
+  h1 {
+    margin-bottom: 0.45rem;
+  }
+
+  h2 {
+    margin-bottom: 0.45rem;
+  }
+
+  .scene__actions {
+    margin-top: 0.65rem;
+  }
+
+  .statement {
+    margin-block: 0.45rem 0.65rem;
+  }
+}
+
+

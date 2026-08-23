@@ -10,7 +10,11 @@ const renderPhoto = (asset: PhotoAsset, className = ''): string => {
 
   if (asset.available) {
     return `
-      <figure class="${classes}" data-photo-path="/public/${asset.path}">
+      <figure
+        class="${classes} photo-slot--available"
+        data-photo-path="/public/${asset.path}"
+        data-photo-state="available"
+      >
         <img
           src="${publicAssetUrl(asset.path)}"
           alt="${asset.alt}"
@@ -28,6 +32,7 @@ const renderPhoto = (asset: PhotoAsset, className = ''): string => {
       role="img"
       aria-label="${asset.alt} Ảnh chưa được cung cấp."
       data-photo-path="/public/${asset.path}"
+      data-photo-state="placeholder"
     >
       <figcaption>
         <span>${asset.placeholderLabel}</span>
@@ -36,6 +41,9 @@ const renderPhoto = (asset: PhotoAsset, className = ''): string => {
     </figure>
   `
 }
+
+const photoGroupClasses = (hasSecondaryPhoto: boolean): string =>
+  `scene__media photo-group photo-group--${hasSecondaryPhoto ? 'multiple' : 'single'}`
 
 const renderDocketMatter = (matter: DocketMatter): string => `
   <li class="docket__item">
@@ -112,7 +120,7 @@ export const renderSite = (): string => {
               <p class="statement">${opening.statement}</p>
               <p>${opening.direction}</p>
             </div>
-            <div>${renderPhoto(photoAssets.portrait)}</div>
+            <div class="scene__media">${renderPhoto(photoAssets.portrait)}</div>
           </div>
           <div class="scene__actions">
             <button class="button" type="button" aria-controls="exhibit-childhood" data-scene-next>
@@ -138,7 +146,7 @@ export const renderSite = (): string => {
               <h2 id="exhibit-a-title" tabindex="-1" data-scene-heading>${exhibits.childhood.title}</h2>
               <p>${exhibits.childhood.copy}</p>
             </div>
-            <div>${renderPhoto(photoAssets.childhood)}</div>
+            <div class="scene__media">${renderPhoto(photoAssets.childhood)}</div>
           </div>
           <div class="scene__actions">
             <button class="button" type="button" aria-controls="exhibit-high-school" data-scene-next>
@@ -163,7 +171,7 @@ export const renderSite = (): string => {
             <h2 id="exhibit-b-title" tabindex="-1" data-scene-heading>${exhibits.highSchool.title}</h2>
             <p>${exhibits.highSchool.copy}</p>
           </div>
-          <div class="photo-group">
+          <div class="${photoGroupClasses(photoAssets.highSchoolMemory.available)}">
             ${renderPhoto(photoAssets.highSchoolGroup)}
             ${renderPhoto(photoAssets.highSchoolMemory, 'photo-slot--secondary')}
           </div>
@@ -194,7 +202,7 @@ export const renderSite = (): string => {
               <p>${exhibits.graduation.copy}</p>
               <p class="status">${exhibits.graduation.status}</p>
             </div>
-            <div class="photo-group">
+            <div class="${photoGroupClasses(photoAssets.graduationSecondary.available)}">
               ${renderPhoto(photoAssets.graduation)}
               ${renderPhoto(photoAssets.graduationSecondary, 'photo-slot--secondary')}
             </div>

@@ -9,19 +9,49 @@
   }
 
   .scene__layout {
-    grid-template-columns: minmax(0, 1.15fr) minmax(16rem, 0.85fr);
+    grid-template-columns: minmax(0, 1.1fr) minmax(20rem, 0.9fr);
     gap: clamp(2rem, 4vw, 4rem);
     align-items: center;
   }
 
   /* Opening & Exhibits Layout */
-  .opening .scene__layout,
+  .opening .scene__inner {
+    max-width: 54rem;
+  }
+
+  .opening .scene__layout {
+    grid-template-columns: minmax(0, 1.05fr) minmax(22rem, 0.95fr);
+    gap: clamp(2rem, 4.5vw, 4rem);
+  }
+
+  #exhibit-childhood .scene__inner {
+    max-width: 50rem;
+  }
+
   #exhibit-childhood .scene__layout {
-    grid-template-columns: minmax(0, 1.15fr) minmax(16rem, 0.85fr);
+    grid-template-columns: minmax(0, 1.15fr) minmax(18rem, 0.85fr);
+    gap: clamp(2rem, 4.5vw, 4rem);
+  }
+
+  #exhibit-high-school .scene__inner {
+    max-width: 54rem;
+  }
+
+  #exhibit-high-school .photo-group--single .photo-slot {
+    grid-column: 1 / -1;
+    width: 100%;
+    max-width: 50rem;
+    aspect-ratio: 4 / 3;
+    margin-inline: auto;
+  }
+
+  #exhibit-graduation .scene__inner {
+    max-width: 58rem;
   }
 
   #exhibit-graduation .scene__layout {
-    grid-template-columns: minmax(0, 1.1fr) minmax(16rem, 0.9fr);
+    grid-template-columns: minmax(0, 1fr) minmax(24rem, 1.1fr);
+    gap: clamp(2.5rem, 5vw, 4.5rem);
   }
 
   /* High School Multi-Photo vs Single Photo */
@@ -33,28 +63,8 @@
     grid-template-columns: 1fr;
   }
 
-  .photo-group--single .photo-slot {
-    max-width: 38rem;
-  }
-
-  #exhibit-high-school .scene__inner {
-    max-width: 48rem;
-  }
-
-  #exhibit-high-school .photo-group--single .photo-slot {
-    grid-column: 1 / -1;
-    width: 100%;
-    max-width: 42rem;
-    height: min(34dvh, 20rem);
-    margin-inline: 0;
-  }
-
   .photo-slot--secondary {
     margin-top: 1.5rem;
-  }
-
-  .photo-slot {
-    height: min(36dvh, 20rem);
   }
 
   /* Docket item desktop row layout */
@@ -91,10 +101,6 @@
   .scene__layout {
     gap: clamp(2.5rem, 4.5vw, 4.5rem);
   }
-
-  .photo-slot {
-    height: min(38dvh, 22rem);
-  }
 }
 
 /* ==========================================================================
@@ -103,27 +109,46 @@
 
 @media (max-width: 47.99rem) {
   .scene {
-    padding: clamp(0.5rem, 2vw, 1rem);
+    padding: clamp(0.5rem, 2.5vw, 1rem);
     align-items: center;
   }
 
   .scene__inner {
-    max-height: calc(100dvh - clamp(1rem, 3vw, 2rem));
     padding: clamp(1.25rem, 3.5dvh, 2rem) clamp(1rem, 3.5vw, 1.5rem);
     margin-block: auto;
   }
 
   .scene__layout {
     grid-template-columns: 1fr;
-    gap: 0.85rem;
+    gap: 1rem;
   }
 
-  .photo-slot {
-    height: clamp(9.5rem, 22dvh, 13.5rem);
+  /* Scene-specific mobile photo sizing for strong visual presence */
+  .opening .photo-slot {
+    aspect-ratio: 1 / 1;
+    width: 100%;
+    max-width: 22rem;
+    margin-inline: auto;
   }
 
-  .photo-group--single .photo-slot {
-    height: clamp(9.5rem, 23dvh, 14rem);
+  #exhibit-childhood .photo-slot {
+    aspect-ratio: 4 / 5;
+    width: 100%;
+    max-width: 19rem;
+    margin-inline: auto;
+  }
+
+  #exhibit-high-school .photo-slot {
+    aspect-ratio: 4 / 3;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .exhibit--graduation .photo-slot {
+    aspect-ratio: 1 / 1;
+    width: 100%;
+    max-width: 24rem;
+    margin-inline: auto;
   }
 
   .docket__item {
@@ -181,31 +206,30 @@
 @media (max-height: 44rem) {
   .scene {
     align-items: flex-start;
+    padding: 0.5rem;
+    padding-top: 2.75rem;
   }
 
   .scene__inner {
-    padding-block: 1rem;
-  }
-
-  .photo-slot {
-    height: clamp(8rem, 18dvh, 11rem);
+    padding-block: 1.15rem;
+    padding-inline: 1rem;
+    margin-block: 0 1.5rem;
+    gap: 0.75rem;
   }
 
   h1 {
-    margin-bottom: 0.45rem;
+    margin-bottom: 0.4rem;
   }
 
   h2 {
-    margin-bottom: 0.45rem;
+    margin-bottom: 0.4rem;
   }
 
   .scene__actions {
-    margin-top: 0.65rem;
+    margin-top: 0.75rem;
   }
 
   .statement {
-    margin-block: 0.45rem 0.65rem;
+    margin-block: 0.5rem 0.75rem;
   }
 }
-
-

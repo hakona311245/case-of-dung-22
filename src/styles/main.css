@@ -484,7 +484,6 @@ code {
 .photo-slot {
   position: relative;
   width: 100%;
-  height: clamp(10rem, 24dvh, 16rem);
   margin-bottom: 0;
   overflow: hidden;
   border: 1px solid var(--border-card);
@@ -496,7 +495,36 @@ code {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 300ms ease;
+  display: block;
+}
+
+/* Scene-specific default photo proportions */
+.opening .photo-slot {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  max-width: 26rem;
+  margin-inline: auto;
+}
+
+#exhibit-childhood .photo-slot {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  max-width: 22rem;
+  margin-inline: auto;
+}
+
+#exhibit-high-school .photo-slot {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  max-width: 52rem;
+  margin-inline: auto;
+}
+
+.exhibit--graduation .photo-slot {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  max-width: 30rem;
+  margin-inline: auto;
 }
 
 /* Archival mount placeholder */

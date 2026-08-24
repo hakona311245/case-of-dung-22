@@ -159,7 +159,6 @@ export const siteContent = {
   personalLetter: {
     eyebrow: '💌 NGOÀI HỒ SƠ',
     title: 'Một lời nhắn từ Bóng 🎈',
-    closedPrompt: 'Có một lời nhắn riêng được kẹp lại trong hồ sơ.',
     openCta: 'MỞ THƯ',
 
     body: 'Hé lô Thùi, là Bóng 🎈 đây. Bóng chúc mừng Thùi sinh nhật 22 thậc zui zẻ nhóe 🎂. Năm vừa qua Thùi đã có 1 năm cảm xúc bùn vui lẫn lộn, thăng hoa cảm xúc, tận đáy đao khổ. Vị mà sau tất cả chuyện đó, chụy Thùi zẫn siu tỏa sáng ✨ và còn ngồi nhâm nhi ly Cà phê Laura 2 vị ☕ ở tòa nhà chọc trời, ngồi trên chiếc ghế văn phòng êm ái và xử lý các hồ sơ một cách kinh ngạc. Bóng chúc Thùi một năm mới 23 tuổi thật nhiều niềm vui mới, nhiều trải nghiệm sẽ còn đến với Thùi. Có thể là anh chàng kia sẽ thuyết phục đc Thùi 👀. Và mong tụi mình sẽ cùng phát triển để các cuộc hẹn đi chơi xa không còn là dự án ma =)))))))))).',

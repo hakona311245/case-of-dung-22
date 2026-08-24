@@ -360,18 +360,24 @@ export const renderSite = (): string => {
             <div class="letter-note" data-letter-note>
               <div class="letter-note__paper" data-letter-paper>
                 <div class="letter-note__closed" data-letter-closed>
-                  <p>${personalLetter.closedPrompt}</p>
-                  <div class="scene__actions letter-note__closed-actions">
-                    <button
-                      class="button"
-                      type="button"
-                      aria-controls="personal-letter-message"
-                      aria-expanded="false"
-                      data-letter-open
-                    >
-                      ${personalLetter.openCta}
-                    </button>
-                  </div>
+                  <div class="letter-note__crease letter-note__crease--left" aria-hidden="true"></div>
+                  <div class="letter-note__crease letter-note__crease--right" aria-hidden="true"></div>
+                  <button
+                    class="wax-seal"
+                    type="button"
+                    aria-label="Mở thư"
+                    aria-controls="personal-letter-message"
+                    aria-expanded="false"
+                    data-letter-open
+                  >
+                    <span class="wax-seal__disc">
+                      <span class="wax-seal__rim"></span>
+                      <span class="wax-seal__emboss">
+                        <span class="wax-seal__crest" aria-hidden="true">§</span>
+                        <span class="wax-seal__text" aria-hidden="true">MỞ THƯ</span>
+                      </span>
+                    </span>
+                  </button>
                 </div>
                 <article
                   class="letter-note__message"

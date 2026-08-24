@@ -277,7 +277,12 @@
   }
 
   .letter-note {
-    height: clamp(22rem, 58dvh, 27rem);
+    height: clamp(16rem, 42dvh, 20rem);
+  }
+
+  .wax-seal {
+    width: 4.75rem;
+    height: 4.75rem;
   }
 
   .letter-note__closed,

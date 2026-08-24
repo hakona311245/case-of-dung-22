@@ -66,14 +66,16 @@ export const setupLetterInteraction = (scene: HTMLElement): void => {
         defaults: { overwrite: 'auto' },
         onComplete: () => {
           finishOpening()
-          gsap.set([paper, message, continueActions], {
+          gsap.set([paper, message, continueActions, openButton], {
             clearProps: 'transform,opacity,visibility,clip-path,height',
           })
         },
       })
       .set(message, { autoAlpha: 0, clipPath: 'inset(46% 2% 46% 2%)', y: 8 }, 0)
       .set(continueActions, { autoAlpha: 0, y: 5 }, 0)
-      .to(flap, { rotationX: -164, y: -5, duration: 0.34, ease: 'power2.inOut' }, 0)
+      .to(openButton, { scale: 0.93, y: 2, duration: 0.1, ease: 'power1.in' }, 0)
+      .to(openButton, { scale: 1.12, opacity: 0, rotation: 6, y: -6, duration: 0.22, ease: 'power2.out' }, 0.1)
+      .to(flap, { rotationX: -164, y: -5, duration: 0.34, ease: 'power2.inOut' }, 0.04)
       .to(closedFace, { opacity: 0, scaleY: 0.12, duration: 0.28, ease: 'power2.in' }, 0.18)
       .to(paper, { y: -3, rotationX: -1.5, duration: 0.24, ease: 'power1.out' }, 0.2)
       .to(note, { height: openPaperHeight, duration: 0.68, ease: 'power3.inOut' }, 0.26)

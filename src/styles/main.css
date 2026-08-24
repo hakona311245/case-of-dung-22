@@ -1261,10 +1261,11 @@ code {
 }
 
 .letter-note {
+  position: relative;
   width: 100%;
-  max-width: 40rem;
-  height: clamp(19rem, 46dvh, 23rem);
-  perspective: 900px;
+  max-width: 38rem;
+  height: clamp(16rem, 38dvh, 20rem);
+  perspective: 1000px;
 }
 
 .letter-note__paper {
@@ -1272,10 +1273,11 @@ code {
   width: 100%;
   height: 100%;
   border: 1px solid #ded6c7;
-  border-radius: 2px;
+  border-radius: 3px;
   background: #fffefa;
   box-shadow:
-    0 12px 28px -12px rgba(17, 27, 43, 0.18),
+    0 12px 28px -10px rgba(17, 27, 43, 0.14),
+    0 2px 6px rgba(17, 27, 43, 0.05),
     3px 4px 0 rgba(23, 55, 141, 0.05);
   transform-style: preserve-3d;
   transform-origin: center;
@@ -1285,48 +1287,185 @@ code {
 .letter-note__message {
   position: absolute;
   inset: 0;
-  padding: clamp(1.5rem, 4vw, 2.5rem);
 }
 
 .letter-note__closed {
   z-index: 4;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  text-align: center;
+  background: #fffdf9;
+  border-radius: inherit;
   transform-origin: center;
+  overflow: hidden;
 }
 
-.letter-note__closed::before,
-.letter-note__closed::after {
-  content: "";
+/* Subtle physical diagonal folds on the envelope body */
+.letter-note__crease {
   position: absolute;
-  left: 8%;
-  right: 8%;
-  height: 1px;
-  background: linear-gradient(to right, transparent, #d8cfbf 18%, #d8cfbf 82%, transparent);
+  bottom: 0;
+  width: 50%;
+  height: 100%;
   pointer-events: none;
 }
 
-.letter-note__closed::before {
-  top: 33.333%;
+.letter-note__crease--left {
+  left: 0;
+  background: linear-gradient(to top right, rgba(220, 210, 195, 0.25) 0%, transparent 46%);
+  border-right: 1px dashed rgba(215, 205, 190, 0.35);
+  clip-path: polygon(0 100%, 100% 52%, 0 0);
 }
 
-.letter-note__closed::after {
-  bottom: 33.333%;
+.letter-note__crease--right {
+  right: 0;
+  background: linear-gradient(to top left, rgba(220, 210, 195, 0.25) 0%, transparent 46%);
+  border-left: 1px dashed rgba(215, 205, 190, 0.35);
+  clip-path: polygon(100% 100%, 0 52%, 100% 0);
 }
 
-.letter-note__closed > p {
-  max-width: 27rem;
-  color: var(--text-body);
-  font-size: clamp(1rem, 2vw, 1.15rem);
-  line-height: 1.55;
+/* Top Envelope Flap */
+.letter-note__flap {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 3;
+  height: 52%;
+  border-top: 1px solid rgba(222, 214, 199, 0.85);
+  background: linear-gradient(172deg, #f8f3e8 0%, #ede5d5 85%, #e2d9c6 100%);
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+  filter: drop-shadow(0 4px 7px rgba(17, 27, 43, 0.11));
+  transform-origin: top center;
+  backface-visibility: hidden;
+  pointer-events: none;
 }
 
-.letter-note__closed-actions,
-.letter-note__continue {
+/* ==========================================================================
+   Tactile Burgundy Wax Seal (Clickable Opening Mechanism)
+   ========================================================================== */
+
+.wax-seal {
+  position: absolute;
+  top: 52%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 6;
+  display: inline-flex;
+  align-items: center;
   justify-content: center;
+  width: 5.25rem;
+  height: 5.25rem;
+  padding: 0;
+  margin: 0;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  border-radius: 50%;
+  touch-action: manipulation;
+  transition: transform 180ms cubic-bezier(0.2, 0.8, 0.4, 1), box-shadow 180ms ease;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.wax-seal:focus {
+  outline: none;
+}
+
+.wax-seal:focus-visible {
+  outline: 2px solid var(--royal-blue);
+  outline-offset: 4px;
+}
+
+.wax-seal:hover {
+  transform: translate(-50%, -52%) scale(1.05);
+}
+
+.wax-seal:active {
+  transform: translate(-50%, -48%) scale(0.96);
+}
+
+.wax-seal__disc {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  border-radius: 47% 53% 50% 50% / 51% 48% 52% 49%;
+  background: radial-gradient(
+    circle at 35% 30%,
+    #a81e33 0%,
+    #881324 38%,
+    #630a17 75%,
+    #45040f 100%
+  );
+  box-shadow:
+    0 6px 16px -2px rgba(35, 2, 7, 0.52),
+    0 2px 6px rgba(17, 27, 43, 0.22),
+    inset 0 2px 3px rgba(255, 185, 195, 0.42),
+    inset 0 -3px 5px rgba(25, 0, 4, 0.7);
+  transition: box-shadow 180ms ease;
+}
+
+.wax-seal:hover .wax-seal__disc {
+  box-shadow:
+    0 9px 22px -2px rgba(35, 2, 7, 0.6),
+    0 4px 10px rgba(17, 27, 43, 0.26),
+    inset 0 2px 4px rgba(255, 195, 205, 0.5),
+    inset 0 -3px 5px rgba(25, 0, 4, 0.7);
+}
+
+.wax-seal__rim {
+  position: absolute;
+  inset: 3.5px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(240, 130, 145, 0.25);
+  box-shadow:
+    inset 0 1px 2px rgba(255, 190, 200, 0.35),
+    0 1px 2px rgba(20, 0, 4, 0.55);
+  pointer-events: none;
+}
+
+.wax-seal__emboss {
+  position: absolute;
+  inset: 9px;
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.12rem;
+  background: radial-gradient(circle at 45% 45%, #760e1e 0%, #500612 100%);
+  border: 1px solid rgba(220, 110, 125, 0.22);
+  box-shadow:
+    inset 0 2px 5px rgba(18, 0, 3, 0.8),
+    inset 0 -1px 2px rgba(255, 180, 190, 0.15),
+    0 1px 1px rgba(255, 190, 200, 0.18);
+  pointer-events: none;
+}
+
+.wax-seal__crest {
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  font-weight: 700;
+  line-height: 1;
+  color: #df8896;
+  text-shadow:
+    0 -1px 0 rgba(0, 0, 0, 0.85),
+    0 1px 0 rgba(255, 190, 200, 0.35);
+}
+
+.wax-seal__text {
+  font-family: var(--font-sans);
+  font-size: 0.56rem;
+  font-weight: 850;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  line-height: 1;
+  color: #df8896;
+  text-shadow:
+    0 -1px 0 rgba(0, 0, 0, 0.85),
+    0 1px 0 rgba(255, 190, 200, 0.35);
 }
 
 .letter-note__message {
@@ -1338,50 +1477,7 @@ code {
   justify-content: flex-start;
   background: #fffefa;
   text-align: left;
-}
-
-.letter-note__body {
-  width: 100%;
-  max-width: 31rem;
-  color: var(--text-body);
-  font-size: clamp(1rem, 2vw, 1.12rem);
-  line-height: 1.68;
-}
-
-.letter-note__signature {
-  width: 100%;
-  max-width: 31rem;
-  margin-top: 1.25rem;
-  padding-top: 0.75rem;
-  border-top: 1px solid var(--border-subtle);
-  color: var(--royal-ink);
-  font-family: var(--font-display);
-  font-size: 1.55rem;
-  font-style: italic;
-  text-align: right;
-}
-
-.letter-note__continue {
-  width: 100%;
-  max-width: 40rem;
-  justify-content: center;
-  margin-top: 0.15rem;
-  padding-top: 0.65rem;
-}
-
-.letter-note__flap {
-  position: absolute;
-  top: 0;
-  right: 0;
-  left: 0;
-  z-index: 3;
-  height: 48%;
-  border-top: 1px solid rgba(222, 214, 199, 0.8);
-  background: linear-gradient(165deg, rgba(237, 232, 221, 0.82), rgba(255, 254, 250, 0.62));
-  clip-path: polygon(0 0, 100% 0, 50% 100%);
-  transform-origin: top center;
-  backface-visibility: hidden;
-  pointer-events: none;
+  padding: clamp(1.5rem, 4vw, 2.5rem);
 }
 
 .personal-letter[data-letter-measuring] .letter-note,

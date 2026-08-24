@@ -49,7 +49,7 @@ export const photoAssets = {
     available: false,
   },
   graduation: {
-    path: 'her-img/dung-graduation.png',
+    path: 'her-img/dung-graduation-cropped.png',
     alt: 'Dung trong lễ phục tốt nghiệp sau khi hoàn thành chương trình Luật.',
     placeholderLabel: 'Chân dung tốt nghiệp chính',
     objectPosition: '50% 12%',
@@ -68,8 +68,8 @@ export const photoAssets = {
 
 // Add /public/audio/background.mp3 and set `available` to true when music is selected.
 export const audioAsset = {
-  path: 'audio/background.mp3',
-  available: false,
+  path: 'public/music.mp3',
+  available: true,
   volume: 0.2,
 }
 
@@ -149,7 +149,7 @@ export const siteContent = {
 
   judgment: {
     label: 'PHÁN QUYẾT CUỐI CÙNG',
-    copy: 'Sau khi xem xét toàn bộ chứng cứ, Hội đồng đi đến kết luận: Thùi chính thức hai mươi hai tuổi, tham vọng ở mức đáng gờm, ăn ảnh một cách đáng ngờ, và hoàn toàn xứng đáng với một năm thật đẹp ở phía trước.',
+    copy: 'Sau khi xem xét toàn bộ chứng cứ, Hội đồng đi đến kết luận: Thùi chính thức đã hai mươi hai tuổi, đầy tham zọng, tỏa sáng trong từng bức ảnh, và có tương lai sáng lạn phía trước.',
     celebration: 'CHÚC MỪNG SINH NHẬT 22 TUỔI, THÙI. ✨',
     signature: 'Bóng 🎈',
     signatureTitle: 'Cố vấn Ban Sinh nhật',

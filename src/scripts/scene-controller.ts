@@ -15,9 +15,11 @@ type SceneControllerOptions = {
 
 const setSceneState = (scene: HTMLElement, state: SceneState): void => {
   const isInactive = state === 'inactive'
+  const isActive = state === 'active'
   scene.dataset.sceneState = state
   scene.hidden = isInactive
-  scene.setAttribute('aria-hidden', String(isInactive))
+  scene.inert = !isActive
+  scene.setAttribute('aria-hidden', String(!isActive))
 }
 
 const focusSceneHeading = (scene: HTMLElement): void => {
@@ -35,6 +37,12 @@ export const setupSceneController = (
 
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)')
   const initialActiveScenes = scenes.filter((scene) => scene.dataset.sceneState === 'active')
+  const shell = scenes[0]?.closest<HTMLElement>('[data-dossier-shell]')
+  const viewport = shell?.closest<HTMLElement>('.dossier-viewport')
+
+  if (!shell || !viewport) {
+    throw new Error('The scene controller requires a persistent dossier shell and viewport.')
+  }
 
   if (initialActiveScenes.length !== 1) {
     throw new Error('The scene controller requires exactly one initial active scene.')
@@ -42,6 +50,53 @@ export const setupSceneController = (
 
   let activeIndex = scenes.indexOf(initialActiveScenes[0])
   let isTransitioning = false
+
+  const getSceneContent = (scene: HTMLElement): HTMLElement => {
+    const content = scene.querySelector<HTMLElement>(
+      '.dossier-cover__content, .dossier-page__content',
+    )
+
+    if (!content) {
+      throw new Error(`Scene content wrapper is missing for #${scene.id}.`)
+    }
+
+    return content
+  }
+
+  const measureSceneHeight = (scene: HTMLElement): number => {
+    const wasHidden = scene.hidden
+    const wasInert = scene.inert
+    const wasAriaHidden = scene.getAttribute('aria-hidden')
+
+    scene.hidden = false
+    scene.inert = true
+    scene.setAttribute('aria-hidden', 'true')
+    scene.dataset.dossierMeasuring = ''
+
+    const measuredHeight = getSceneContent(scene).offsetHeight + 2
+
+    delete scene.dataset.dossierMeasuring
+    scene.hidden = wasHidden
+    scene.inert = wasInert
+    scene.setAttribute('aria-hidden', wasAriaHidden ?? 'true')
+
+    return Math.max(measuredHeight, 1)
+  }
+
+  const setShellHeight = (height: number): void => {
+    shell.style.height = `${height}px`
+  }
+
+  const resizeObserver = new ResizeObserver(() => {
+    if (!isTransitioning) {
+      setShellHeight(measureSceneHeight(scenes[activeIndex]))
+    }
+  })
+
+  const observeActiveScene = (): void => {
+    resizeObserver.disconnect()
+    resizeObserver.observe(getSceneContent(scenes[activeIndex]))
+  }
 
   scenes.forEach((scene, index) => {
     setSceneState(scene, index === activeIndex ? 'active' : 'inactive')
@@ -73,6 +128,8 @@ export const setupSceneController = (
     const current = scenes[activeIndex]
     const next = scenes[activeIndex + 1]
     const isIntro = activeIndex === 0
+    const currentHeight = Math.ceil(shell.getBoundingClientRect().height)
+    const nextHeight = measureSceneHeight(next)
 
     // Immediate button response
     trigger.classList.add('button--pressed')
@@ -82,32 +139,44 @@ export const setupSceneController = (
       trigger.classList.remove('button--pressed')
       setSceneState(current, 'inactive')
       setSceneState(next, 'active')
-      next.scrollTop = 0
+      viewport.scrollTop = 0
+      setShellHeight(nextHeight)
       activeIndex += 1
       updateSceneContext()
-      focusSceneHeading(next)
+      observeActiveScene()
       isTransitioning = false
+      window.setTimeout(() => focusSceneHeading(next), 50)
       return
     }
 
     if (isIntro) {
       setSceneState(next, 'entering')
-      next.scrollTop = 0
+      viewport.scrollTop = 0
       setSceneState(current, 'leaving')
 
-      await openDossier(current, next)
+      await openDossier(current, next, {
+        shell,
+        coverHeight: currentHeight,
+        openingHeight: nextHeight,
+      })
 
       setSceneState(current, 'inactive')
       trigger.classList.remove('button--pressed')
       setSceneState(next, 'active')
+      setShellHeight(nextHeight)
       activeIndex += 1
       updateSceneContext()
+      observeActiveScene()
 
       focusSceneHeading(next)
       isTransitioning = false
     } else {
+      if (nextHeight > currentHeight) {
+        setShellHeight(nextHeight)
+      }
+
       setSceneState(next, 'entering')
-      next.scrollTop = 0
+      viewport.scrollTop = 0
       setSceneState(current, 'leaving')
 
       await turnPage(current, next)
@@ -115,8 +184,10 @@ export const setupSceneController = (
       setSceneState(current, 'inactive')
       trigger.classList.remove('button--pressed')
       setSceneState(next, 'active')
+      setShellHeight(nextHeight)
       activeIndex += 1
       updateSceneContext()
+      observeActiveScene()
 
       focusSceneHeading(next)
       isTransitioning = false
@@ -132,4 +203,6 @@ export const setupSceneController = (
   })
 
   updateSceneContext()
+  setShellHeight(measureSceneHeight(scenes[activeIndex]))
+  observeActiveScene()
 }

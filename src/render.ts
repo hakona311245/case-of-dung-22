@@ -65,16 +65,39 @@ export const renderSite = (): string => {
   const { cover, opening, exhibits, pending, judgment, appeal } = siteContent
 
   return `
+    <div class="case-controls" id="case-controls" hidden>
+      <p class="scene-progress" id="scene-progress" aria-live="polite">01 / 08</p>
+      <button
+        class="audio-control"
+        id="audio-control"
+        type="button"
+        aria-pressed="true"
+        aria-describedby="audio-status"
+      >
+        Nhạc chưa có
+      </button>
+      <span class="sr-only" id="audio-status" aria-live="polite">Nhạc nền hiện chưa có.</span>
+    </div>
+
+    <main id="case-file" class="dossier-viewport" aria-label="Nội dung hồ sơ">
+      <div class="dossier-shell" data-dossier-shell>
+        <div class="dossier-shell__backing" aria-hidden="true">
+          <div class="dossier-shell__depth"></div>
+          <div class="dossier-shell__spine"></div>
+          <div class="dossier-shell__registration dossier-shell__registration--top"></div>
+          <div class="dossier-shell__registration dossier-shell__registration--bottom"></div>
+        </div>
+
     <section
-      class="scene case-cover"
+      class="scene case-cover dossier-cover"
       id="case-cover"
       aria-labelledby="case-title"
       aria-hidden="false"
       data-scene
       data-scene-state="active"
     >
-      <div class="scene__inner case-cover__inner dossier-folder">
-        <div class="dossier-spine" aria-hidden="true"></div>
+      <div class="scene__inner case-cover__inner dossier-folder dossier-cover__surface">
+        <div class="dossier-cover__content">
         <div class="dossier-tab" aria-hidden="true">
           <span class="dossier-tab__mark">§</span>
           <span class="dossier-tab__title">HỒ SƠ TỐI MẬT • 2026-DUNG22</span>
@@ -123,26 +146,13 @@ export const renderSite = (): string => {
           </button>
         </div>
         <p class="fine-print">${cover.confidentiality}</p>
+        </div>
       </div>
     </section>
 
-    <div class="case-controls" id="case-controls" hidden>
-      <p class="scene-progress" id="scene-progress" aria-live="polite">01 / 08</p>
-      <button
-        class="audio-control"
-        id="audio-control"
-        type="button"
-        aria-pressed="true"
-        aria-describedby="audio-status"
-      >
-        Nhạc chưa có
-      </button>
-      <span class="sr-only" id="audio-status" aria-live="polite">Nhạc nền hiện chưa có.</span>
-    </div>
-
-    <main id="case-file" aria-label="Nội dung hồ sơ">
+        <div class="dossier-page-stack" data-dossier-page-stack>
       <section
-        class="scene opening"
+        class="scene opening dossier-page"
         id="opening-statement"
         aria-labelledby="opening-title"
         aria-hidden="true"
@@ -150,7 +160,8 @@ export const renderSite = (): string => {
         data-scene-state="inactive"
         hidden
       >
-        <div class="scene__inner">
+        <div class="scene__inner dossier-page__surface">
+          <div class="dossier-page__content">
           <div class="scene__layout">
             <div class="scene__copy">
               <p class="eyebrow">BẮT ĐẦU ĐIỀU TRẦN</p>
@@ -165,11 +176,12 @@ export const renderSite = (): string => {
               ${opening.cta}
             </button>
           </div>
+          </div>
         </div>
       </section>
 
       <section
-        class="scene exhibit"
+        class="scene exhibit dossier-page"
         id="exhibit-childhood"
         aria-labelledby="exhibit-a-title"
         aria-hidden="true"
@@ -177,7 +189,8 @@ export const renderSite = (): string => {
         data-scene-state="inactive"
         hidden
       >
-        <div class="scene__inner">
+        <div class="scene__inner dossier-page__surface">
+          <div class="dossier-page__content">
           <div class="scene__layout">
             <div class="scene__copy">
               <p class="eyebrow">${exhibits.childhood.label}</p>
@@ -191,11 +204,12 @@ export const renderSite = (): string => {
               ${exhibits.childhood.cta}
             </button>
           </div>
+          </div>
         </div>
       </section>
 
       <section
-        class="scene exhibit"
+        class="scene exhibit dossier-page"
         id="exhibit-high-school"
         aria-labelledby="exhibit-b-title"
         aria-hidden="true"
@@ -203,7 +217,8 @@ export const renderSite = (): string => {
         data-scene-state="inactive"
         hidden
       >
-        <div class="scene__inner">
+        <div class="scene__inner dossier-page__surface">
+          <div class="dossier-page__content">
           <div class="scene__copy">
             <p class="eyebrow">${exhibits.highSchool.label}</p>
             <h2 id="exhibit-b-title" tabindex="-1" data-scene-heading>${exhibits.highSchool.title}</h2>
@@ -218,11 +233,12 @@ export const renderSite = (): string => {
               ${exhibits.highSchool.cta}
             </button>
           </div>
+          </div>
         </div>
       </section>
 
       <section
-        class="scene exhibit exhibit--graduation"
+        class="scene exhibit exhibit--graduation dossier-page"
         id="exhibit-graduation"
         aria-labelledby="exhibit-c-title"
         aria-hidden="true"
@@ -230,7 +246,8 @@ export const renderSite = (): string => {
         data-scene-state="inactive"
         hidden
       >
-        <div class="scene__inner">
+        <div class="scene__inner dossier-page__surface">
+          <div class="dossier-page__content">
           <div class="scene__layout">
             <div class="scene__copy">
               <p class="eyebrow">${exhibits.graduation.label}</p>
@@ -250,11 +267,12 @@ export const renderSite = (): string => {
               ${exhibits.graduation.cta}
             </button>
           </div>
+          </div>
         </div>
       </section>
 
       <section
-        class="scene pending"
+        class="scene pending dossier-page"
         id="pending-proceedings"
         aria-labelledby="pending-title"
         aria-hidden="true"
@@ -262,7 +280,8 @@ export const renderSite = (): string => {
         data-scene-state="inactive"
         hidden
       >
-        <div class="scene__inner docket-sheet">
+        <div class="scene__inner dossier-page__surface">
+          <div class="dossier-page__content docket-sheet">
           <div class="docket-header">
             <div class="docket-header__titles">
               <p class="eyebrow">TIẾN TRÌNH THỦ TỤC</p>
@@ -286,11 +305,12 @@ export const renderSite = (): string => {
               ${pending.cta}
             </button>
           </div>
+          </div>
         </div>
       </section>
 
       <section
-        class="scene judgment"
+        class="scene judgment dossier-page"
         id="final-judgment"
         aria-labelledby="judgment-title"
         aria-hidden="true"
@@ -298,7 +318,8 @@ export const renderSite = (): string => {
         data-scene-state="inactive"
         hidden
       >
-        <div class="scene__inner judgment__inner verdict-certificate">
+        <div class="scene__inner dossier-page__surface">
+          <div class="dossier-page__content judgment__inner verdict-certificate">
           <div class="judgment__stamp" aria-hidden="true">
             <span class="stamp__label">HỘI ĐỒNG PHÊ CHUẨN</span>
             <span class="stamp__meta">TUỔI 22 • CHÍNH THỨC</span>
@@ -316,11 +337,12 @@ export const renderSite = (): string => {
               ${judgment.cta}
             </button>
           </div>
+          </div>
         </div>
       </section>
 
       <section
-        class="scene appeal"
+        class="scene appeal dossier-page"
         id="notice-of-appeal"
         aria-labelledby="appeal-title"
         aria-hidden="true"
@@ -328,7 +350,8 @@ export const renderSite = (): string => {
         data-scene-state="inactive"
         hidden
       >
-        <div class="scene__inner appeal__inner appeal-slip">
+        <div class="scene__inner dossier-page__surface">
+          <div class="dossier-page__content appeal__inner appeal-slip">
           <div class="appeal-slip__clip" aria-hidden="true"></div>
           <div class="appeal-slip__tag" aria-hidden="true">
             <span>PHỤ LỤC THỦ TỤC • BỔ SUNG VÀO HỒ SƠ</span>
@@ -340,8 +363,11 @@ export const renderSite = (): string => {
             <button class="button" id="appeal-button" type="button">${appeal.cta}</button>
           </div>
           <p class="sr-only" id="celebration-status" aria-live="polite"></p>
+          </div>
         </div>
       </section>
+        </div>
+      </div>
     </main>
 
     <div class="confetti" id="confetti" aria-hidden="true"></div>

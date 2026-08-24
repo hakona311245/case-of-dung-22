@@ -13,15 +13,22 @@ const requiredElement = <ElementType extends Element>(
   return element
 }
 
+type DossierOpenOptions = {
+  shell: HTMLElement
+  coverHeight: number
+  openingHeight: number
+}
+
 export const openDossier = (
   coverScene: HTMLElement,
   openingScene: HTMLElement,
+  options: DossierOpenOptions,
 ): Promise<void> => {
-  const cover = requiredElement<HTMLElement>(coverScene, '.dossier-folder')
+  const cover = requiredElement<HTMLElement>(coverScene, '.dossier-cover__surface')
   const seal = requiredElement<HTMLElement>(coverScene, '.unseal-ribbon')
   const peeledSeal = requiredElement<HTMLElement>(coverScene, '.unseal-ribbon__slice--peeled')
   const tearFront = requiredElement<SVGElement>(coverScene, '.unseal-ribbon__tear-front')
-  const openingSheet = requiredElement<HTMLElement>(openingScene, '.scene__inner')
+  const openingSheet = requiredElement<HTMLElement>(openingScene, '.dossier-page__surface')
   const portrait = requiredElement<HTMLElement>(openingScene, '.photo-slot')
   const tearState = { progress: 0 }
 
@@ -63,6 +70,7 @@ export const openDossier = (
     })
 
     timeline
+      .set(cover, { height: options.coverHeight, bottom: 'auto' }, 0)
       .set(openingSheet, { opacity: 0.82, y: 10, scale: 0.985 }, 0)
       .set(portrait, { opacity: 0, y: -20, rotation: 2.2, scale: 1.035 }, 0)
       .to(
@@ -89,6 +97,11 @@ export const openDossier = (
         tearState,
         { progress: 2, duration: 0.2, ease: 'power3.out', onUpdate: applyTearProgress },
         0.65,
+      )
+      .to(
+        options.shell,
+        { height: options.openingHeight, duration: 0.5, ease: 'power3.inOut' },
+        0.95,
       )
       .fromTo(
         cover,

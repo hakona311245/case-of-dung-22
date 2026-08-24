@@ -182,38 +182,121 @@
     display: none;
   }
 
+  .pending .docket-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.65rem;
+    padding-bottom: 0.85rem;
+    margin-bottom: 0.45rem;
+  }
+
+  .pending .docket-header__titles h2 {
+    font-size: clamp(1.6rem, 7.2vw, 1.85rem);
+    line-height: 1.08;
+  }
+
+  .pending .docket-header__code {
+    flex-direction: row;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 0.25rem 0.7rem;
+    text-align: left;
+  }
+
+  .pending .docket-code {
+    font-size: 0.72rem;
+  }
+
+  .pending .docket-sub {
+    font-size: 0.7rem;
+    line-height: 1.4;
+  }
+
   .docket__item {
-    grid-template-columns: 1.8rem 1fr;
+    grid-template-columns: 1.65rem minmax(0, 1fr);
     grid-template-areas:
       "num content"
       "num status";
-    gap: 0.35rem 0.5rem;
-    padding: 0.65rem 0.2rem;
+    gap: 0.6rem 0.65rem;
+    padding: 0.95rem 0.15rem;
   }
 
   .docket__index {
     grid-area: num;
     align-self: start;
-    margin-top: 0.1rem;
+    margin-top: 0.15rem;
+    font-size: 0.76rem;
   }
 
   .docket__content {
     grid-area: content;
   }
 
+  .docket__title-row h3 {
+    font-size: 1rem;
+    line-height: 1.25;
+    white-space: normal;
+  }
+
+  .docket__detail {
+    margin-top: 0.3rem;
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+
   .docket__status-col {
     grid-area: status;
     justify-content: flex-start;
-    margin-top: 0.25rem;
+    margin-top: 0.05rem;
+  }
+
+  .docket__item .status {
+    max-width: 100%;
+    padding: 0.3rem 0.6rem;
+    font-size: 0.7rem;
+    line-height: 1.3;
+    text-align: left;
+    white-space: normal;
   }
 
   .docket__leader {
     display: none;
   }
 
+  .pending .scene__actions {
+    margin-top: 1.45rem;
+  }
+
+  body[data-scene-index="5"] .dossier-shell {
+    --dossier-shell-maximum-height: 800px;
+  }
+
   .appeal-slip {
     max-width: 100%;
     transform: none;
+  }
+
+  .letter-note {
+    height: clamp(22rem, 58dvh, 27rem);
+  }
+
+  .letter-note__closed,
+  .letter-note__message {
+    padding: 1.35rem 1.1rem;
+  }
+
+  .personal-letter__header h2 {
+    font-size: clamp(1.55rem, 7vw, 2rem);
+  }
+
+  .letter-note__body {
+    font-size: 1rem;
+    line-height: 1.62;
+  }
+
+  .letter-note__signature {
+    margin-top: 1.15rem;
+    padding-top: 0.7rem;
   }
 
   .case-cover .case-cover__inner {
@@ -301,13 +384,18 @@
 }
 
 @media (max-width: 47.99rem) {
-  .dossier-viewport {
+  #case-file.dossier-viewport {
     padding: clamp(0.5rem, 2.5vw, 1rem);
     perspective: 1000px;
     perspective-origin: 25% 50%;
   }
 
   .dossier-shell {
+    --dossier-shell-baseline-height: 620px;
+    --dossier-shell-maximum-height: 720px;
+    --dossier-page-inset-block: 1.15rem;
+    --dossier-page-inset-start: 1.25rem;
+    --dossier-page-inset-end: 1rem;
     perspective: 1000px;
     perspective-origin: 25% 50%;
   }
@@ -317,30 +405,61 @@
   }
 
   .dossier-page__content:not(.docket-sheet):not(.verdict-certificate):not(.appeal-slip) {
-    padding: clamp(1.25rem, 3.5dvh, 2rem) clamp(1rem, 3.5vw, 1.5rem);
+    padding-block: var(--dossier-page-inset-block);
+    padding-inline-start: var(--dossier-page-inset-start);
+    padding-inline-end: var(--dossier-page-inset-end);
+  }
+
+  .opening .photo-slot {
+    max-width: 19rem;
   }
 }
 
 @media (max-width: 30rem) {
-  .dossier-viewport {
+  #case-file.dossier-viewport {
     padding: 0.4rem;
   }
 
-  .dossier-cover__content,
-  .dossier-page__content:not(.docket-sheet):not(.verdict-certificate):not(.appeal-slip) {
+  .dossier-cover__content {
     padding: 1.15rem 0.95rem;
   }
 }
 
 @media (max-height: 44rem) {
-  .dossier-viewport {
+  #case-file.dossier-viewport {
     padding: 2.75rem 0.5rem 0.5rem;
   }
 
-  .dossier-cover__content,
-  .dossier-page__content:not(.docket-sheet):not(.verdict-certificate):not(.appeal-slip) {
+  .dossier-cover__content {
     padding-block: 1.15rem;
     padding-inline: 1rem;
-    gap: 0.75rem;
+  }
+}
+
+@media (min-width: 48rem) {
+  #exhibit-high-school .dossier-page__content {
+    display: grid;
+    grid-template-columns: minmax(13rem, 0.7fr) minmax(29rem, 1.3fr);
+    grid-template-areas:
+      "copy media"
+      "actions media";
+    grid-template-rows: auto auto;
+    align-items: center;
+    column-gap: 2rem;
+    row-gap: 1rem;
+  }
+
+  #exhibit-high-school .scene__copy {
+    grid-area: copy;
+  }
+
+  #exhibit-high-school .scene__media {
+    grid-area: media;
+  }
+
+  #exhibit-high-school .scene__actions {
+    grid-area: actions;
+    align-self: start;
+    margin-top: 0;
   }
 }

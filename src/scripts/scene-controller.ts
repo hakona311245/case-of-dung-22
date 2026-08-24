@@ -83,13 +83,31 @@ export const setupSceneController = (
     return Math.max(measuredHeight, 1)
   }
 
+  const readShellHeightToken = (token: string): number => {
+    const value = Number.parseFloat(getComputedStyle(shell).getPropertyValue(token))
+
+    if (!Number.isFinite(value) || value <= 0) {
+      throw new Error(`Invalid dossier shell height token: ${token}.`)
+    }
+
+    return value
+  }
+
+  const getSettledShellHeight = (scene: HTMLElement): number => {
+    const intrinsicHeight = measureSceneHeight(scene)
+    const baselineHeight = readShellHeightToken('--dossier-shell-baseline-height')
+    const maximumHeight = readShellHeightToken('--dossier-shell-maximum-height')
+
+    return Math.min(Math.max(intrinsicHeight, baselineHeight), maximumHeight)
+  }
+
   const setShellHeight = (height: number): void => {
     shell.style.height = `${height}px`
   }
 
   const resizeObserver = new ResizeObserver(() => {
     if (!isTransitioning) {
-      setShellHeight(measureSceneHeight(scenes[activeIndex]))
+      setShellHeight(getSettledShellHeight(scenes[activeIndex]))
     }
   })
 
@@ -129,7 +147,7 @@ export const setupSceneController = (
     const next = scenes[activeIndex + 1]
     const isIntro = activeIndex === 0
     const currentHeight = Math.ceil(shell.getBoundingClientRect().height)
-    const nextHeight = measureSceneHeight(next)
+    const nextHeight = getSettledShellHeight(next)
 
     // Immediate button response
     trigger.classList.add('button--pressed')
@@ -203,6 +221,6 @@ export const setupSceneController = (
   })
 
   updateSceneContext()
-  setShellHeight(measureSceneHeight(scenes[activeIndex]))
+  setShellHeight(getSettledShellHeight(scenes[activeIndex]))
   observeActiveScene()
 }

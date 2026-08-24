@@ -5,6 +5,7 @@ import { audioAsset } from './content.ts'
 import { renderSite } from './render.ts'
 import { setupAudio } from './scripts/audio.ts'
 import { setupConfetti } from './scripts/confetti.ts'
+import { setupLetterInteraction } from './scripts/letter.ts'
 import { setupSceneController } from './scripts/scene-controller.ts'
 
 const getRequiredElement = <ElementType extends Element>(
@@ -31,6 +32,7 @@ const audioStatus = getRequiredElement<HTMLElement>('#audio-status')
 const appealButton = getRequiredElement<HTMLButtonElement>('#appeal-button')
 const confettiContainer = getRequiredElement<HTMLElement>('#confetti')
 const celebrationStatus = getRequiredElement<HTMLElement>('#celebration-status')
+const personalLetterScene = getRequiredElement<HTMLElement>('#personal-letter')
 
 const audio = setupAudio(audioButton, audioStatus, { ...audioAsset })
 
@@ -48,4 +50,5 @@ setupSceneController(scenes, {
   },
 })
 
+setupLetterInteraction(personalLetterScene)
 setupConfetti(appealButton, confettiContainer, celebrationStatus)

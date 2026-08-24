@@ -46,6 +46,11 @@
   --btn-radius: 2px;
   --dossier-padding-x: clamp(1.25rem, 3.8vw, 2.75rem);
   --dossier-padding-y: clamp(1.25rem, 3.2dvh, 2.25rem);
+  --dossier-shell-baseline-height: 560px;
+  --dossier-shell-maximum-height: 624px;
+  --dossier-page-inset-block: clamp(1.75rem, 4dvh, 2.25rem);
+  --dossier-page-inset-start: clamp(2.25rem, 4.5vw, 3.75rem);
+  --dossier-page-inset-end: clamp(2rem, 4vw, 3.25rem);
   
   /* Elevation & Tactile Shadows */
   --shadow-dossier: 0 12px 32px -8px rgba(17, 27, 43, 0.06), 0 2px 4px rgba(17, 27, 43, 0.02);
@@ -1233,7 +1238,179 @@ code {
 }
 
 /* ==========================================================================
-   Scene 8: Notice of Appeal (Inserted Legal Memorandum Slip)
+   Scene 8: Personal Letter (Local Folded-Note Interaction)
+   ========================================================================== */
+
+.personal-letter__content {
+  max-width: 46rem;
+  align-items: center;
+  gap: 0.9rem;
+}
+
+.personal-letter__header {
+  max-width: 34rem;
+  text-align: center;
+}
+
+.personal-letter__header .eyebrow {
+  margin-bottom: 0.3rem;
+}
+
+.personal-letter__header h2 {
+  margin-bottom: 0;
+}
+
+.letter-note {
+  width: 100%;
+  max-width: 40rem;
+  height: clamp(19rem, 46dvh, 23rem);
+  perspective: 900px;
+}
+
+.letter-note__paper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border: 1px solid #ded6c7;
+  border-radius: 2px;
+  background: #fffefa;
+  box-shadow:
+    0 12px 28px -12px rgba(17, 27, 43, 0.18),
+    3px 4px 0 rgba(23, 55, 141, 0.05);
+  transform-style: preserve-3d;
+  transform-origin: center;
+}
+
+.letter-note__closed,
+.letter-note__message {
+  position: absolute;
+  inset: 0;
+  padding: clamp(1.5rem, 4vw, 2.5rem);
+}
+
+.letter-note__closed {
+  z-index: 4;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  transform-origin: center;
+}
+
+.letter-note__closed::before,
+.letter-note__closed::after {
+  content: "";
+  position: absolute;
+  left: 8%;
+  right: 8%;
+  height: 1px;
+  background: linear-gradient(to right, transparent, #d8cfbf 18%, #d8cfbf 82%, transparent);
+  pointer-events: none;
+}
+
+.letter-note__closed::before {
+  top: 33.333%;
+}
+
+.letter-note__closed::after {
+  bottom: 33.333%;
+}
+
+.letter-note__closed > p {
+  max-width: 27rem;
+  color: var(--text-body);
+  font-size: clamp(1rem, 2vw, 1.15rem);
+  line-height: 1.55;
+}
+
+.letter-note__closed-actions,
+.letter-note__continue {
+  justify-content: center;
+}
+
+.letter-note__message {
+  z-index: 2;
+  display: flex;
+  visibility: hidden;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  background: #fffefa;
+  text-align: left;
+}
+
+.letter-note__body {
+  width: 100%;
+  max-width: 31rem;
+  color: var(--text-body);
+  font-size: clamp(1rem, 2vw, 1.12rem);
+  line-height: 1.68;
+}
+
+.letter-note__signature {
+  width: 100%;
+  max-width: 31rem;
+  margin-top: 1.25rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--border-subtle);
+  color: var(--royal-ink);
+  font-family: var(--font-display);
+  font-size: 1.55rem;
+  font-style: italic;
+  text-align: right;
+}
+
+.letter-note__continue {
+  width: 100%;
+  max-width: 40rem;
+  justify-content: center;
+  margin-top: 0.15rem;
+  padding-top: 0.65rem;
+}
+
+.letter-note__flap {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 3;
+  height: 48%;
+  border-top: 1px solid rgba(222, 214, 199, 0.8);
+  background: linear-gradient(165deg, rgba(237, 232, 221, 0.82), rgba(255, 254, 250, 0.62));
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+  transform-origin: top center;
+  backface-visibility: hidden;
+  pointer-events: none;
+}
+
+.personal-letter[data-letter-measuring] .letter-note,
+.personal-letter[data-letter-state="open"] .letter-note,
+.personal-letter[data-letter-measuring] .letter-note__paper,
+.personal-letter[data-letter-state="open"] .letter-note__paper {
+  height: auto;
+}
+
+.personal-letter[data-letter-measuring] .letter-note__message,
+.personal-letter[data-letter-state="open"] .letter-note__message {
+  position: relative;
+  inset: auto;
+}
+
+.personal-letter[data-letter-measuring] .letter-note__message {
+  visibility: hidden;
+}
+
+.personal-letter[data-letter-state="open"] .letter-note__message {
+  visibility: visible;
+}
+
+body[data-scene-index="7"] .dossier-shell {
+  --dossier-shell-maximum-height: 1600px;
+}
+
+/* ==========================================================================
+   Scene 9: Notice of Appeal (Inserted Legal Memorandum Slip)
    ========================================================================== */
 
 .appeal .appeal-slip {
@@ -1487,7 +1664,9 @@ body[data-scene-index="0"] .dossier-page-stack {
 }
 
 .dossier-page__content:not(.docket-sheet):not(.verdict-certificate):not(.appeal-slip) {
-  padding: var(--dossier-padding-y) var(--dossier-padding-x);
+  padding-block: var(--dossier-page-inset-block);
+  padding-inline-start: var(--dossier-page-inset-start);
+  padding-inline-end: var(--dossier-page-inset-end);
 }
 
 .opening .dossier-page__content {
@@ -1511,20 +1690,30 @@ body[data-scene-index="0"] .dossier-page-stack {
   max-width: 48rem;
 }
 
+.personal-letter .dossier-page__content {
+  max-width: 46rem;
+}
+
 .appeal .dossier-page__content {
   max-width: 29rem;
 }
 
 .dossier-page__content.docket-sheet {
-  padding: clamp(1.5rem, 3.5dvh, 2.5rem) clamp(1.25rem, 3.8vw, 2.75rem);
+  padding-block: var(--dossier-page-inset-block);
+  padding-inline-start: var(--dossier-page-inset-start);
+  padding-inline-end: var(--dossier-page-inset-end);
 }
 
 .dossier-page__content.verdict-certificate {
-  padding: clamp(2rem, 4.5dvh, 3.25rem) clamp(1.5rem, 4vw, 3.5rem);
+  padding-block: calc(var(--dossier-page-inset-block) + 0.5rem);
+  padding-inline-start: calc(var(--dossier-page-inset-start) + 0.25rem);
+  padding-inline-end: calc(var(--dossier-page-inset-end) + 0.25rem);
 }
 
 .dossier-page__content.appeal-slip {
-  padding: clamp(1.75rem, 4dvh, 2.75rem) clamp(1.25rem, 3.8vw, 2.5rem);
+  padding-block: var(--dossier-page-inset-block);
+  padding-inline-start: var(--dossier-page-inset-start);
+  padding-inline-end: var(--dossier-page-inset-end);
 }
 
 .exhibit--graduation .dossier-page__surface {

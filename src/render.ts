@@ -62,11 +62,11 @@ const renderDocketMatter = (matter: DocketMatter, index: number): string => `
 `
 
 export const renderSite = (): string => {
-  const { cover, opening, exhibits, pending, judgment, appeal } = siteContent
+  const { cover, opening, exhibits, pending, judgment, personalLetter, appeal } = siteContent
 
   return `
     <div class="case-controls" id="case-controls" hidden>
-      <p class="scene-progress" id="scene-progress" aria-live="polite">01 / 08</p>
+      <p class="scene-progress" id="scene-progress" aria-live="polite">01 / 09</p>
       <button
         class="audio-control"
         id="audio-control"
@@ -100,7 +100,7 @@ export const renderSite = (): string => {
         <div class="dossier-cover__content">
         <div class="dossier-tab" aria-hidden="true">
           <span class="dossier-tab__mark">§</span>
-          <span class="dossier-tab__title">HỒ SƠ TỐI MẬT • 2026-DUNG22</span>
+          <span class="dossier-tab__title">HỒ SƠ TỐI MẬT • 2026-THÙI22</span>
         </div>
         <p class="eyebrow">${cover.institution}</p>
         <div class="cover-meta-row">
@@ -333,10 +333,72 @@ export const renderSite = (): string => {
             <p>${judgment.signatureTitle}</p>
           </footer>
           <div class="scene__actions">
-            <button class="button" type="button" aria-controls="notice-of-appeal" data-scene-next>
+            <button class="button" type="button" aria-controls="personal-letter" data-scene-next>
               ${judgment.cta}
             </button>
           </div>
+          </div>
+        </div>
+      </section>
+
+      <section
+        class="scene personal-letter dossier-page"
+        id="personal-letter"
+        aria-labelledby="personal-letter-title"
+        aria-hidden="true"
+        data-scene
+        data-scene-state="inactive"
+        data-letter-state="closed"
+        hidden
+      >
+        <div class="scene__inner dossier-page__surface">
+          <div class="dossier-page__content personal-letter__content">
+            <header class="personal-letter__header">
+              <p class="eyebrow">${personalLetter.eyebrow}</p>
+              <h2 id="personal-letter-title" tabindex="-1" data-scene-heading>${personalLetter.title}</h2>
+            </header>
+            <div class="letter-note" data-letter-note>
+              <div class="letter-note__paper" data-letter-paper>
+                <div class="letter-note__closed" data-letter-closed>
+                  <p>${personalLetter.closedPrompt}</p>
+                  <div class="scene__actions letter-note__closed-actions">
+                    <button
+                      class="button"
+                      type="button"
+                      aria-controls="personal-letter-message"
+                      aria-expanded="false"
+                      data-letter-open
+                    >
+                      ${personalLetter.openCta}
+                    </button>
+                  </div>
+                </div>
+                <article
+                  class="letter-note__message"
+                  id="personal-letter-message"
+                  tabindex="-1"
+                  aria-hidden="true"
+                  inert
+                  data-letter-message
+                >
+                  <p class="letter-note__body">${personalLetter.body}</p>
+                  <footer class="letter-note__signature">${personalLetter.signature}</footer>
+                </article>
+                <div class="letter-note__flap" aria-hidden="true" data-letter-flap></div>
+              </div>
+            </div>
+            <div class="scene__actions letter-note__continue" data-letter-actions hidden>
+              <button
+                class="button"
+                type="button"
+                aria-controls="notice-of-appeal"
+                data-scene-next
+                data-letter-continue
+                disabled
+              >
+                ${personalLetter.continueCta}
+              </button>
+            </div>
           </div>
         </div>
       </section>

@@ -77,7 +77,7 @@ export const siteContent = {
   cover: {
     institution: 'Hội đồng Tối cao về Chuyện Sinh nhật',
     caseNumber: 'HỒ SƠ SỐ 22',
-    title: 'V/V: DUNG BƯỚC SANG TUỔI 22',
+    title: 'V/V: THÙI BƯỚC SANG TUỔI 22',
     subtitle: 'Về việc chính thức bước sang tuổi hai mươi hai.',
     filed: 'Lập hồ sơ • Tháng 8.2026',
     confidentiality: 'BẢO MẬT • CHỈ DÙNG CHO MỤC ĐÍCH SINH NHẬT',
@@ -86,7 +86,7 @@ export const siteContent = {
   opening: {
     label: 'LỜI TRÌNH BÀY MỞ ĐẦU',
     statement:
-      'Ở tuổi hai mươi hai, Dung đã sống sót qua bốn năm học Luật, chính thức cầm trong tay tấm bằng Cử nhân, duy trì một mức độ tự tin hoàn toàn hợp lý về nhan sắc của mình, và dường như còn cho rằng một tấm bằng vẫn chưa đủ.',
+      'Ở tuổi 22, Thùi đã tỏa sáng với bốn năm học Luật, chính thức cầm trong tay tấm bằng Cử nhân, ngoài tự tin về tài năng của mình, cô ấy còn tự tin về cả nhan sắc của mình, và còn cho rằng một tấm bằng vẫn chưa đủ.',
     direction: 'Hội đồng xin tiến hành xem xét chứng cứ.',
     cta: 'XEM XÉT CHỨNG CỨ',
   },
@@ -94,13 +94,13 @@ export const siteContent = {
     childhood: {
       label: 'CHỨNG CỨ A',
       title: 'Khởi đầu câu chuyện',
-      copy: 'Tư liệu hình ảnh ban đầu cho thấy sự tự tin này đã xuất hiện từ rất sớm.',
+      copy: 'Chứng cứ hình ảnh ban đầu cho thấy sự tự tin này đã xuất hiện từ rất sớm.',
       cta: 'CHỨNG CỨ TIẾP THEO',
     },
     highSchool: {
       label: 'CHỨNG CỨ B',
       title: 'Những năm tháng cấp ba',
-      copy: 'Ở một thời điểm nào đó, một nhóm bạn cấp ba đã trở thành những nhân vật thường trực trong hồ sơ này.',
+      copy: 'Trong hồ sơ những năm cấp ba, có một nhóm bạn xuất hiện đủ nhiều để rồi trở thành một phần không thể thiếu.',
       cta: 'CHỨNG CỨ TIẾP THEO',
     },
     graduation: {
@@ -125,25 +125,34 @@ export const siteContent = {
       {
         title: 'Sự nghiệp',
         status: 'RẤT CÓ TRIỂN VỌNG',
-        detail: 'Hành trình của một luật sư tương lai vẫn đang tiếp diễn.',
+        detail: 'Hành trình của một luật sư ở tòa nhà chọc trời đang được nuôi dưỡng, và có vẻ sẽ còn rất nhiều cơ hội phía trước.',
       },
       {
-        title: 'Cuộc sống nơi phố biển',
+        title: 'Nhà 69 lầu và 36 chiếc xe hơi',
         status: 'ĐẶC BIỆT KHUYẾN NGHỊ',
       },
       {
-        title: 'Chàng hoàng tử đẹp trai, giàu có & tài năng',
+        title: 'Chàng trai rich kid khéo miệng',
         status: 'ĐANG XEM XÉT',
       },
     ] satisfies DocketMatter[],
   },
   judgment: {
     label: 'PHÁN QUYẾT CUỐI CÙNG',
-    copy: 'Sau khi xem xét toàn bộ chứng cứ, Hội đồng đi đến kết luận: Dung chính thức hai mươi hai tuổi, tham vọng ở mức đáng gờm, ăn ảnh một cách đáng ngờ, và hoàn toàn xứng đáng với một năm thật đẹp ở phía trước.',
-    celebration: 'CHÚC MỪNG SINH NHẬT 22 TUỔI, DUNG.',
+    copy: 'Sau khi xem xét toàn bộ chứng cứ, Hội đồng đi đến kết luận: Thùi chính thức hai mươi hai tuổi, tham vọng ở mức đáng gờm, ăn ảnh một cách đáng ngờ, và hoàn toàn xứng đáng với một năm thật đẹp ở phía trước.',
+    celebration: 'CHÚC MỪNG SINH NHẬT 22 TUỔI, THÙI.',
     signature: 'Bóng',
     signatureTitle: 'Cố vấn Ban Sinh nhật',
-    cta: 'HẸN GẶP Ở TUỔI 23',
+    cta: 'CÒN MỘT LỜI NHẮN',
+  },
+  personalLetter: {
+    eyebrow: 'NGOÀI HỒ SƠ',
+    title: 'Một lời nhắn từ Bóng',
+    closedPrompt: 'Có một lời nhắn riêng được kẹp lại trong hồ sơ.',
+    openCta: 'MỞ THƯ',
+    body: 'Hé lô Thùi, là Bóng đây. Bóng chúc mừng Thùi sinh nhật 22 thậc zui zẻ nhóe. Năm vừa qua Thùi đã có 1 năm cảm xúc bùn vui lẫn lộn, thăng hoa cảm xúc, tận đáy đao khổ. Vị mà sau tất cả chuyện đó, chụy Thùi zẫn siu tỏa sáng và còn ngồi nhâm nhi ly Cà phê Laura 2 vị ở tòa nhà chọc trời, ngồi trên chiếc ghế văn phòng êm ái và xử lý các hồ sơ một cách kinh ngạc. Bóng chúc Thùi một năm mới 23 tuổi thật nhiều niềm vui mới, nhiều trải nghiệm sẽ còn đến với Thùi. Có thể là anh chàng kia sẽ thuyết phục đc Thùi. Và mong tụi mình sẽ cùng phát triển để các cuộc hẹn đi chơi xa không còn là dự án ma =)))))))))).',
+    signature: 'Bóng',
+    continueCta: 'XEM THÔNG BÁO KHÁNG CÁO',
   },
   appeal: {
     label: 'THÔNG BÁO KHÁNG CÁO',

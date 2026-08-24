@@ -112,7 +112,7 @@ export const siteContent = {
       title: 'Chặng đường Luật ⚖️',
       headline: 'KHÉP LẠI HỒ SƠ.',
       subheading: 'Tấm bằng Cử nhân Luật, chính thức trong tay.',
-      copy: 'Bốn năm, vô số hạn chót và một lễ tốt nghiệp sau đó, chứng cứ đã quá rõ ràng.',
+      copy: '4 năm, hàng ngàn đét lai và một lễ tốt nghiệp siu cháy, chứng cứ đã quá rõ ràng.',
       cta: 'XEM CÁC VIỆC CÒN CHỜ',
       status: '⚖️ ULAW • TỐT NGHIỆP • 2026',
     },
@@ -161,7 +161,7 @@ export const siteContent = {
     title: 'Một lời nhắn từ Bóng 🎈',
     openCta: 'MỞ THƯ',
 
-    body: 'Hé lô Thùi, là Bóng 🎈 đây. Bóng chúc mừng Thùi sinh nhật 22 thậc zui zẻ nhóe 🎂. Năm vừa qua Thùi đã có 1 năm cảm xúc bùn vui lẫn lộn, thăng hoa cảm xúc, tận đáy đao khổ. Vị mà sau tất cả chuyện đó, chụy Thùi zẫn siu tỏa sáng ✨ và còn ngồi nhâm nhi ly Cà phê Laura 2 vị ☕ ở tòa nhà chọc trời, ngồi trên chiếc ghế văn phòng êm ái và xử lý các hồ sơ một cách kinh ngạc. Bóng chúc Thùi một năm mới 23 tuổi thật nhiều niềm vui mới, nhiều trải nghiệm sẽ còn đến với Thùi. Có thể là anh chàng kia sẽ thuyết phục đc Thùi 👀. Và mong tụi mình sẽ cùng phát triển để các cuộc hẹn đi chơi xa không còn là dự án ma =)))))))))).',
+    body: 'Hé lô Thùi, là Bóng 🎈 đây. Bóng chúc mừng Thùi sinh nhật 22 thậc zui zẻ nhóe 🎂. Năm vừa qua Thùi đã có 1 năm cảm xúc bùn vui lẫn lộn, thăng hoa cảm xúc, tận đáy đao khổ. Vị mà sau tất cả chuyện đó, chụy Thùi zẫn siu tỏa sáng ✨ và còn ngồi nhâm nhi ly Cà phê Laura 2 vị ☕ ở tòa nhà chọc trời, ngồi trên chiếc ghế văn phòng êm ái và xử lý các hồ sơ một cách kinh ngạc. Bóng chúc Thùi một tuổi mới thật nhiều niềm vui mới, nhiều trải nghiệm sẽ còn đến với Thùi. Có thể là anh chàng kia sẽ thuyết phục đc Thùi 👀. Và mong tụi mình sẽ cùng phát triển để các cuộc hẹn đi chơi xa không còn là dự án ma =)))))))))).',
 
     signature: 'Bóng 🎈',
     continueCta: 'XEM THÔNG BÁO KHÁNG CÁO',

@@ -1,5 +1,5 @@
-const CONFETTI_COUNT = 24
-const CONFETTI_DURATION_MS = 1600
+const CONFETTI_COUNT = 48
+const CONFETTI_DURATION_MS = 2600
 
 export const setupConfetti = (
   button: HTMLButtonElement,
@@ -17,13 +17,23 @@ export const setupConfetti = (
     }
 
     const fragment = document.createDocumentFragment()
+    const viewportWidth = window.innerWidth || 800
+    const viewportHeight = window.innerHeight || 600
 
     for (let index = 0; index < CONFETTI_COUNT; index += 1) {
       const piece = document.createElement('span')
       piece.className = 'confetti__piece'
-      piece.style.setProperty('--confetti-x', `${Math.round(Math.random() * 180 - 90)}px`)
-      piece.style.setProperty('--confetti-rotate', `${Math.round(Math.random() * 540 - 270)}deg`)
-      piece.style.setProperty('--confetti-delay', `${Math.round(Math.random() * 180)}ms`)
+      const xOffset = Math.round((Math.random() - 0.5) * viewportWidth * 0.9)
+      const startY = Math.round(-viewportHeight * 0.3 - Math.random() * 120)
+      const endY = Math.round(viewportHeight * 0.65 + Math.random() * 200)
+      const rotate = Math.round((Math.random() - 0.5) * 1080)
+      const delay = Math.round(Math.random() * 260)
+
+      piece.style.setProperty('--confetti-x', `${xOffset}px`)
+      piece.style.setProperty('--confetti-start-y', `${startY}px`)
+      piece.style.setProperty('--confetti-end-y', `${endY}px`)
+      piece.style.setProperty('--confetti-rotate', `${rotate}deg`)
+      piece.style.setProperty('--confetti-delay', `${delay}ms`)
       fragment.append(piece)
     }
 

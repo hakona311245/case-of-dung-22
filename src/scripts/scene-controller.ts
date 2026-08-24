@@ -1,3 +1,5 @@
+import { openDossier, turnPage } from '../animations/dossier-motion.ts'
+
 export type SceneState = 'inactive' | 'entering' | 'active' | 'leaving'
 
 type SceneChange = {
@@ -10,65 +12,6 @@ type SceneControllerOptions = {
   progressElement?: HTMLElement
   onSceneChange?: (change: SceneChange) => void
 }
-
-const parseTime = (value: string): number => {
-  const time = Number.parseFloat(value)
-
-  if (!Number.isFinite(time)) {
-    return 0
-  }
-
-  return value.trim().endsWith('ms') ? time : time * 1000
-}
-
-const transitionTime = (element: HTMLElement): number => {
-  const styles = window.getComputedStyle(element)
-  const durations = styles.transitionDuration.split(',').map(parseTime)
-  const delays = styles.transitionDelay.split(',').map(parseTime)
-
-  return durations.reduce((longest, duration, index) => {
-    const delay = delays[index % delays.length] ?? 0
-    return Math.max(longest, duration + delay)
-  }, 0)
-}
-
-const waitForTransition = (
-  element: HTMLElement,
-  reducedMotion: MediaQueryList,
-): Promise<void> => {
-  if (reducedMotion.matches) {
-    return Promise.resolve()
-  }
-
-  const duration = transitionTime(element)
-
-  if (duration === 0) {
-    return Promise.resolve()
-  }
-
-  return new Promise((resolve) => {
-    const fallback = window.setTimeout(finish, duration + 50)
-
-    function finish(): void {
-      window.clearTimeout(fallback)
-      element.removeEventListener('transitionend', handleTransitionEnd)
-      resolve()
-    }
-
-    function handleTransitionEnd(event: TransitionEvent): void {
-      if (event.target === element) {
-        finish()
-      }
-    }
-
-    element.addEventListener('transitionend', handleTransitionEnd)
-  })
-}
-
-const nextFrame = (): Promise<void> =>
-  new Promise((resolve) => {
-    window.requestAnimationFrame(() => window.requestAnimationFrame(() => resolve()))
-  })
 
 const setSceneState = (scene: HTMLElement, state: SceneState): void => {
   const isInactive = state === 'inactive'
@@ -129,22 +72,55 @@ export const setupSceneController = (
 
     const current = scenes[activeIndex]
     const next = scenes[activeIndex + 1]
+    const isIntro = activeIndex === 0
 
-    setSceneState(current, 'leaving')
-    await waitForTransition(current, reducedMotion)
+    // Immediate button response
+    trigger.classList.add('button--pressed')
 
-    setSceneState(current, 'inactive')
-    setSceneState(next, 'entering')
-    next.scrollTop = 0
-    activeIndex += 1
-    updateSceneContext()
+    // REDUCED MOTION: Instant accessible swap
+    if (reducedMotion.matches) {
+      trigger.classList.remove('button--pressed')
+      setSceneState(current, 'inactive')
+      setSceneState(next, 'active')
+      next.scrollTop = 0
+      activeIndex += 1
+      updateSceneContext()
+      focusSceneHeading(next)
+      isTransitioning = false
+      return
+    }
 
-    await nextFrame()
-    setSceneState(next, 'active')
-    focusSceneHeading(next)
-    await waitForTransition(next, reducedMotion)
+    if (isIntro) {
+      setSceneState(next, 'entering')
+      next.scrollTop = 0
+      setSceneState(current, 'leaving')
 
-    isTransitioning = false
+      await openDossier(current, next)
+
+      setSceneState(current, 'inactive')
+      trigger.classList.remove('button--pressed')
+      setSceneState(next, 'active')
+      activeIndex += 1
+      updateSceneContext()
+
+      focusSceneHeading(next)
+      isTransitioning = false
+    } else {
+      setSceneState(next, 'entering')
+      next.scrollTop = 0
+      setSceneState(current, 'leaving')
+
+      await turnPage(current, next)
+
+      setSceneState(current, 'inactive')
+      trigger.classList.remove('button--pressed')
+      setSceneState(next, 'active')
+      activeIndex += 1
+      updateSceneContext()
+
+      focusSceneHeading(next)
+      isTransitioning = false
+    }
   }
 
   scenes.forEach((scene) => {

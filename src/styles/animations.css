@@ -1,47 +1,74 @@
 /* ==========================================================================
-   Dossier Document Advance Transitions
+   Dossier Document Advance Transitions & Physical Layering
    ========================================================================== */
 
-.scene[data-scene] {
-  transition:
-    opacity 240ms cubic-bezier(0.16, 1, 0.3, 1),
-    transform 240ms cubic-bezier(0.16, 1, 0.3, 1);
+/* Initial Dossier Cover Entry on Page Load (~450ms) */
+.case-cover[data-scene-state="active"] .dossier-folder {
+  animation: dossier-entry-settle 450ms cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
-.scene[data-scene-state="entering"] {
-  opacity: 0;
-  transform: translateY(14px) scale(0.995);
-}
-
-.scene[data-scene-state="active"] {
-  opacity: 1;
-  transform: translateY(0) scale(1);
-}
-
-.scene[data-scene-state="leaving"] {
-  opacity: 0;
-  transform: translateY(-10px) scale(0.992);
-}
-
-/* Tactile document sheet elevation settle */
-.scene[data-scene-state="active"] .scene__inner {
-  animation: sheet-settle 280ms cubic-bezier(0.16, 1, 0.3, 1) both;
-}
-
-@keyframes sheet-settle {
+@keyframes dossier-entry-settle {
   0% {
-    box-shadow: 0 2px 8px rgba(17, 27, 43, 0.03);
+    opacity: 0;
+    transform: translateY(14px) scale(0.985);
   }
   100% {
-    box-shadow: var(--shadow-dossier);
+    opacity: 1;
+    transform: translateY(0) scale(1);
   }
 }
 
 /* ==========================================================================
-   Editorial Content & Evidence Staggered Reveals
+   PART B — NORMAL REUSABLE PAGE-TURN TRANSITION (Scenes 2->3, 3->4, etc.)
    ========================================================================== */
 
-.scene[data-scene-state="active"] .scene__copy > * {
+/* GSAP owns page-turn timing; CSS retains the physical paper properties. */
+.scene[data-scene-state="leaving"]:not(.case-cover) .scene__inner {
+  transform-style: preserve-3d;
+  transform-origin: left center;
+  --page-turn-shading-opacity: 0;
+}
+
+/* Dynamic Paper Curl Lighting Gradient */
+.scene[data-scene-state="leaving"]:not(.case-cover) .scene__inner::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: var(--card-radius);
+  background: linear-gradient(
+    to left,
+    rgba(17, 27, 43, 0.22) 0%,
+    rgba(17, 27, 43, 0.08) 18%,
+    rgba(255, 255, 255, 0.15) 35%,
+    transparent 65%
+  );
+  pointer-events: none;
+  opacity: var(--page-turn-shading-opacity, 0);
+  z-index: 30;
+}
+
+/* ==========================================================================
+   Editorial Content & Controls Reveals
+   ========================================================================== */
+
+/* Marginal Utility Controls Reveal */
+.case-controls:not([hidden]) {
+  animation: controls-reveal 240ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes controls-reveal {
+  0% {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Scene Content Staggered Reveals on Active */
+.scene[data-scene-state="active"]:not(.opening) .scene__copy > * {
   animation: content-reveal 240ms cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
@@ -64,13 +91,8 @@
   animation-delay: 110ms;
 }
 
-.scene[data-scene-state="active"] .scene__actions {
+.scene[data-scene-state="active"]:not(.opening) .scene__actions {
   animation: content-reveal 240ms cubic-bezier(0.16, 1, 0.3, 1) 140ms both;
-}
-
-/* Photographic Evidence Mount Unveil */
-.scene[data-scene-state="active"] .photo-slot {
-  animation: evidence-unveil 300ms cubic-bezier(0.16, 1, 0.3, 1) 70ms both;
 }
 
 @keyframes content-reveal {
@@ -84,29 +106,18 @@
   }
 }
 
-@keyframes evidence-unveil {
-  0% {
-    opacity: 0;
-    transform: translateY(8px) scale(0.988);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-}
-
 /* ==========================================================================
    Scene 6: Docket Row Staggered Filing
    ========================================================================== */
 
 .scene[data-scene-state="active"] .docket__item {
-  animation: docket-row-reveal 220ms cubic-bezier(0.16, 1, 0.3, 1) calc(var(--item-index, 0) * 45ms + 40ms) both;
+  animation: docket-row-reveal 230ms cubic-bezier(0.16, 1, 0.3, 1) calc(var(--item-index, 0) * 55ms + 40ms) both;
 }
 
 @keyframes docket-row-reveal {
   0% {
     opacity: 0;
-    transform: translateY(6px);
+    transform: translateY(8px);
   }
   100% {
     opacity: 1;
@@ -115,8 +126,8 @@
 }
 
 /* Prince item: the one playful, slightly angled coral stamp */
-.scene[data-scene-state="active"] .docket__item:last-child .status {
-  animation: prince-stamp-settle 280ms cubic-bezier(0.34, 1.56, 0.64, 1) 260ms both;
+.scene[data-scene-state="active"] .docket__item--prince .status {
+  animation: prince-stamp-settle 280ms cubic-bezier(0.34, 1.56, 0.64, 1) 320ms both;
 }
 
 @keyframes prince-stamp-settle {
@@ -126,11 +137,11 @@
   }
   70% {
     opacity: 1;
-    transform: scale(0.96) rotate(-1.2deg);
+    transform: scale(0.96) rotate(-1.5deg);
   }
   100% {
     opacity: 1;
-    transform: scale(1) rotate(-1.8deg);
+    transform: scale(1) rotate(-2.2deg);
   }
 }
 
@@ -138,15 +149,16 @@
    Scene 7: Final Judgment Major Document Stamp Impact
    ========================================================================== */
 
+/* Delayed to hit right after the page turn completes and sheet settles */
 .scene[data-scene-state="active"] .judgment__stamp {
-  animation: judgment-stamp-impact 360ms cubic-bezier(0.2, 0.9, 0.3, 1) 320ms both;
+  animation: judgment-stamp-impact 380ms cubic-bezier(0.2, 0.9, 0.3, 1) 220ms both;
 }
 
 @keyframes judgment-stamp-impact {
   0% {
     opacity: 0;
-    transform: scale(2.4) rotate(-16deg) translateY(-24px);
-    filter: blur(4px);
+    transform: scale(2.3) rotate(-16deg) translateY(-28px);
+    filter: blur(3px);
   }
   55% {
     opacity: 0.98;
@@ -157,60 +169,71 @@
     transform: scale(1.04) rotate(-5.2deg);
   }
   100% {
-    opacity: 0.92;
+    opacity: 0.94;
     transform: scale(1) rotate(-4.5deg);
   }
 }
 
 /* ==========================================================================
-   Confetti Burst System
+   Confetti Burst System (Full-Viewport Cascade)
    ========================================================================== */
 
 .confetti__piece {
   position: absolute;
-  width: 0.5rem;
-  height: 0.8rem;
+  left: 50%;
+  top: 50%;
+  width: 0.55rem;
+  height: 0.85rem;
   background: var(--royal-blue);
   border-radius: 1px;
-  animation: confetti-burst 1.5s cubic-bezier(0.25, 1, 0.5, 1) var(--confetti-delay) both;
+  animation: confetti-cascade 2.5s cubic-bezier(0.25, 1, 0.5, 1) var(--confetti-delay) both;
 }
 
-.confetti__piece:nth-child(4n + 1) {
+.confetti__piece:nth-child(5n + 1) {
   background: var(--royal-blue);
-  width: 0.5rem;
-  height: 0.8rem;
+  width: 0.55rem;
+  height: 0.85rem;
 }
 
-.confetti__piece:nth-child(4n + 2) {
+.confetti__piece:nth-child(5n + 2) {
   background: var(--bright-blue);
   width: 0.45rem;
-  height: 0.65rem;
+  height: 0.7rem;
   border-radius: 50%;
 }
 
-.confetti__piece:nth-child(4n + 3) {
+.confetti__piece:nth-child(5n + 3) {
   background: var(--baby-blue);
-  width: 0.6rem;
-  height: 0.4rem;
+  width: 0.65rem;
+  height: 0.45rem;
 }
 
-.confetti__piece:nth-child(4n + 4) {
+.confetti__piece:nth-child(5n + 4) {
   background: #ffd166;
-  width: 0.45rem;
-  height: 0.75rem;
+  width: 0.5rem;
+  height: 0.8rem;
 }
 
-@keyframes confetti-burst {
+.confetti__piece:nth-child(5n + 5) {
+  background: #f72585;
+  width: 0.45rem;
+  height: 0.65rem;
+}
+
+@keyframes confetti-cascade {
   0% {
     opacity: 1;
-    transform: translate(0, 0) rotate(0deg) scale(0.8);
+    transform: translate(var(--confetti-x), var(--confetti-start-y)) rotate(0deg) scale(0.8);
   }
-  25% {
-    transform: translate(calc(var(--confetti-x) * 0.5), -5rem) rotate(calc(var(--confetti-rotate) * 0.4)) scale(1.1);
+  15% {
+    transform: translate(calc(var(--confetti-x) * 1.1), calc(var(--confetti-start-y) + 120px)) rotate(calc(var(--confetti-rotate) * 0.3)) scale(1.1);
+  }
+  80% {
+    opacity: 1;
   }
   100% {
     opacity: 0;
-    transform: translate(var(--confetti-x), 14rem) rotate(var(--confetti-rotate)) scale(0.6);
+    transform: translate(calc(var(--confetti-x) * 1.25), var(--confetti-end-y)) rotate(var(--confetti-rotate)) scale(0.5);
   }
 }
 
@@ -234,4 +257,3 @@
     transition-delay: 0ms !important;
   }
 }
-

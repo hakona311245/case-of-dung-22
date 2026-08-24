@@ -68,7 +68,7 @@ export const photoAssets = {
 
 // Add /public/audio/background.mp3 and set `available` to true when music is selected.
 export const audioAsset = {
-  path: 'public/music.mp3',
+  path: 'music.mp3',
   available: true,
   volume: 0.2,
 }
